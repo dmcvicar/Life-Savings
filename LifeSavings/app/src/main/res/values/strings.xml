@@ -3,5 +3,8 @@
 
     <string name="app_name">Life Savings</string>
     <string name="action_settings">Settings</string>
+    <string name="excercise_button">Excercise</string>
+    <string name="food_button">Food</string>
+    <string name="settings">Settings</string>
 
 </resources>

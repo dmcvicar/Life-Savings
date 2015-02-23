@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class HomeActivity extends ActionBarActivity {
@@ -35,5 +36,17 @@ public class HomeActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onExcerciseClicked(View view) {
+
+    }
+
+    public void onFoodClicked(View view) {
+
+    }
+
+    public void onSettingsClicked(View view) {
+
     }
 }
