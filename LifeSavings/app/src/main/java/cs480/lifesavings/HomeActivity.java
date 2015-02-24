@@ -1,9 +1,11 @@
 package cs480.lifesavings;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class HomeActivity extends ActionBarActivity {
@@ -14,6 +16,10 @@ public class HomeActivity extends ActionBarActivity {
         setContentView(R.layout.activity_home);
     }
 
+    public void goToActivity(View view){
+        Intent intent = new Intent(this, ExerciseStatsActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
