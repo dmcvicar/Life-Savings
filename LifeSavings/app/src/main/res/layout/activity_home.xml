@@ -9,6 +9,7 @@
         android:id="@+id/ToActivities"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/title_activity_exercise_stats"
         android:onClick="goToActivity"/>
 
 </RelativeLayout>

@@ -3,7 +3,7 @@
 
     <string name="app_name">Life Savings</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_exercise_stats">ExerciseStatsActivity</string>
+    <string name="title_activity_exercise_stats">Money You\'ve $aved!!!</string>
     <string name="hello_world">Hello world!</string>
     <string name="exercise_total">The Total Amount you saved over your lifetime is: $20.00</string>
 

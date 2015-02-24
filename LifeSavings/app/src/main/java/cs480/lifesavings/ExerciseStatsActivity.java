@@ -19,9 +19,11 @@ public class ExerciseStatsActivity extends ActionBarActivity {
         listView = (ListView) findViewById(R.id.exercise_list);
 
         //Dumby values for the list
-        String[] saved = new String[]{"Steps taken: 57\tMoney Saved:$0.03",
-                "Steps walked: 30\tMoney Saved:$0.01",
-                "Steps walked: 27\tMoney Saved:$0.02"
+        String[] saved = new String[]{"Exercise performed this week:\n",
+                "Steps taken: 57   Money Saved:$0.03",
+                "Steps walked: 30   Money Saved:$0.01",
+                "Steps ran: 27   Money Saved:$0.02",
+                "Reps with 50lb weights: 75\nMoney saved:$0.10"
         };
 
         //Define an adapter
