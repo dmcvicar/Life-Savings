@@ -1,25 +1,24 @@
 package cs480.lifesavings;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 
-public class HomeActivity extends ActionBarActivity {
+public class FoodActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_food);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home, menu);
+        getMenuInflater().inflate(R.menu.menu_food, menu);
         return true;
     }
 
@@ -36,20 +35,5 @@ public class HomeActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void onExcerciseClicked(View view) {
-        Intent intent = new Intent(this, ExerciseStatsActivity.class);
-        startActivity(intent);
-    }
-
-    public void onFoodClicked(View view) {
-        Intent intent = new Intent(this, FoodActivity.class);
-        startActivity(intent);
-    }
-
-    public void onSettingsClicked(View view) {
-        //Intent intent = new Intent(this, Activity_eidt_profile.class);
-        //startActivity(intent);
     }
 }
