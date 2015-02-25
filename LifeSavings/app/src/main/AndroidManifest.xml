@@ -24,6 +24,10 @@
             android:name=".FoodActivity"
             android:label="@string/title_activity_food" >
         </activity>
+        <activity
+            android:name=".EditProfileActivity"
+            android:label="@string/title_activity_profile" >
+        </activity>
     </application>
 
 </manifest>

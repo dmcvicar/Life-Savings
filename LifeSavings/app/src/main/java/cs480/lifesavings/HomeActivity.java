@@ -49,7 +49,7 @@ public class HomeActivity extends ActionBarActivity {
     }
 
     public void onSettingsClicked(View view) {
-        //Intent intent = new Intent(this, Activity_eidt_profile.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this, EditProfileActivity.class);
+        startActivity(intent);
     }
 }
