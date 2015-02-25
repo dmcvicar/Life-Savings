@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Life Savings</string>
-    <string name="app_name_edit">Edit Profile</string>
+    <string name="app_name">ExamOne</string>
     <string name="settings">Settings</string>
     <string name="name_text_field">Name:</string>
     <string name="age_text_field">Age:</string>
@@ -10,7 +9,7 @@
     <string name="weight_text_field">Weight:</string>
     <string name="gender_text_field">Gender:</string>
     <string name="phone_number_text_field">Phone number:</string>
-    <string name="save_button">$ave</string>
+    <string name="save_button">Save</string>
     <string name="cancel_button">Cancel</string>
     <string name="title_activity_display_info">displayInfo</string>
     <string name="edit_profile">Edit Profile</string>
