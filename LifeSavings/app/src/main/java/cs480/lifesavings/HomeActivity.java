@@ -16,11 +16,6 @@ public class HomeActivity extends ActionBarActivity {
         setContentView(R.layout.activity_home);
     }
 
-    public void goToActivity(View view){
-        Intent intent = new Intent(this, ExerciseStatsActivity.class);
-        startActivity(intent);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -44,7 +39,8 @@ public class HomeActivity extends ActionBarActivity {
     }
 
     public void onExcerciseClicked(View view) {
-
+        Intent intent = new Intent(this, ExerciseStatsActivity.class);
+        startActivity(intent);
     }
 
     public void onFoodClicked(View view) {
