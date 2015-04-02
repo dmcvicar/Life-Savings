@@ -28,20 +28,37 @@
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:text="@string/edit_profile"
+            android:onClick="onEditExerciseClicked"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/record_exercise"
+            android:onClick="onRecordExerciseClicked"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:text="@string/savings_profile"
             android:onClick="onSavingsClicked"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/food_button"
-            android:onClick="onFoodClicked"/>
+            android:text="@string/edit_profile"
+            android:onClick="onEditProfileClicked"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/edit_profile"
-            android:onClick="onEditProfileClicked"/>
+            android:text="@string/sign_out"
+            android:onClick="onSignOutClicked"/>
+
+
+
+
+
 
     </LinearLayout>
 </ScrollView>

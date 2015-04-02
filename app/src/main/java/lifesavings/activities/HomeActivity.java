@@ -32,6 +32,8 @@ public class HomeActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -44,9 +46,23 @@ public class HomeActivity extends ActionBarActivity {
     }
 
 
-
     public void onEditProfileClicked(View view) {
         Intent intent = new Intent(this, EditProfileActivity.class);
+        startActivity(intent);
+    }
+
+    public void onSignOutClicked(View view) {
+        Intent intent = new Intent(this, SignOutActivity.class);
+        startActivity(intent);
+    }
+
+    public void onRecordExerciseClicked(View view) {
+        Intent intent = new Intent(this, RecordExerciseActivity.class);
+        startActivity(intent);
+    }
+
+    public void onEditExerciseClicked(View view) {
+        Intent intent = new Intent(this, EditExerciseActivity.class);
         startActivity(intent);
     }
 }

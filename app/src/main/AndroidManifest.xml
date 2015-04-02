@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="lifesavings.activities.HomeActivity"
+            android:name=".HomeActivity"
             android:label="@string/app_name_edit" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,12 +21,28 @@
             android:label="@string/title_activity_exercise_stats" >
         </activity>
         <activity
-            android:name="lifesavings.activities.FoodActivity"
+            android:name=".FoodActivity"
             android:label="@string/title_activity_food" >
         </activity>
         <activity
-            android:name="lifesavings.activities.EditProfileActivity"
+            android:name=".EditProfileActivity"
             android:label="@string/title_activity_profile" >
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name=".SignOutActivity"
+            android:label="@string/title_activity_sign_out" >
+        </activity>
+        <activity
+            android:name=".RecordExerciseActivity"
+            android:label="@string/title_activity_record_exercise" >
+        </activity>
+        <activity
+            android:name=".EditExerciseActivity"
+            android:label="@string/title_activity_edit_exercise" >
         </activity>
     </application>
 
