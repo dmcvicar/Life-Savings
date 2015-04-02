@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -21,12 +22,16 @@ public class SavingsProfile extends ActionBarActivity {
     private ExcerciseDataSource exerciseConnect;
     private MoneyDataSource moneyConnect;
     private ListView listView;
+    private TextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_stats);
+        double total = 0;
 
         listView = (ListView) findViewById(R.id.exercise_list);
+        textView = (TextView) findViewById(R.id.running_total);
 
         exerciseConnect = new ExcerciseDataSource(this);
         moneyConnect = new MoneyDataSource(this);
@@ -52,6 +57,7 @@ public class SavingsProfile extends ActionBarActivity {
                     valuesEx[i + 1] = cur.getTime() + "\t" + cur.getExcercise() + "\t" + cur.getDuration();
                     cash = cur.getDuration() * moneys.get(j).getMoney();
                     valuesEx[i + 1] = valuesEx[i] + "\t" + cash + "\n";
+                    total += cash;
                 }
             }
         }
@@ -60,6 +66,8 @@ public class SavingsProfile extends ActionBarActivity {
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1, valuesEx);
 
+        //Set total
+        textView.setText("Your lifetime savings are: " + Double.toString(total));
         //Apply adapter
         listView.setAdapter(adapter);
     }
