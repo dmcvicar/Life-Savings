@@ -29,8 +29,8 @@
     <string name="hello_world">Hello world!</string>
 
     <string name="title_activity_food">notinuse</string>
-    <string name="title_activity_sign_out">SignOutActivity</string>
-    <string name="title_activity_record_exercise">RecordExerciseActivity</string>
-    <string name="title_activity_edit_exercise">EditExerciseActivity</string>
+    <string name="title_activity_sign_out">Sign Out</string>
+    <string name="title_activity_record_exercise">Record Exercise</string>
+    <string name="title_activity_edit_exercise">Edit Exercise</string>
 
 </resources>
