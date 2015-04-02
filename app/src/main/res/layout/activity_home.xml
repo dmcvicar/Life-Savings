@@ -40,8 +40,8 @@
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/settings"
-            android:onClick="onSettingsClicked"/>
+            android:text="@string/edit_profile"
+            android:onClick="onEditProfileClicked"/>
 
     </LinearLayout>
 </ScrollView>
