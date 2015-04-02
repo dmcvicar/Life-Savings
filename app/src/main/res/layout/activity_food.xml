@@ -4,7 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="cs480.lifesavings.FoodActivity">
+    tools:context="lifesavings.activities.FoodActivity">
 
     <TextView android:text="@string/coming_soon"
         android:layout_centerVertical="true"

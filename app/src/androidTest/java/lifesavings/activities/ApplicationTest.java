@@ -1,4 +1,4 @@
-package cs480.lifesavings;
+package lifesavings.activities;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
