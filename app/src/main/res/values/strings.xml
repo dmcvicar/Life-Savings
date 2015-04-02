@@ -23,5 +23,6 @@
     <string name="title_activity_food">FoodActivity</string>
     <string name="coming_soon">This activity and its functionality will be added in the next cycle!</string>
     <string name="title_activity_profile">User Profile</string>
+    <string name="savings_profile">Your Savings Profile</string>
 
 </resources>

@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="lifesavings.activities.ExerciseStatsActivity"
+            android:name=".SavingsProfile"
             android:label="@string/title_activity_exercise_stats" >
         </activity>
         <activity

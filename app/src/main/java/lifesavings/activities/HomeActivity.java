@@ -38,15 +38,12 @@ public class HomeActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onExcerciseClicked(View view) {
-        Intent intent = new Intent(this, ExerciseStatsActivity.class);
+    public void onSavingsClicked(View view) {
+        Intent intent = new Intent(this, SavingsProfile.class);
         startActivity(intent);
     }
 
-    public void onFoodClicked(View view) {
-        Intent intent = new Intent(this, FoodActivity.class);
-        startActivity(intent);
-    }
+
 
     public void onEditProfileClicked(View view) {
         Intent intent = new Intent(this, EditProfileActivity.class);

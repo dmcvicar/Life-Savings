@@ -6,13 +6,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
-public class ExerciseStatsActivity extends ActionBarActivity {
+public class SavingsProfile extends ActionBarActivity {
 
     private ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_exercise_stats);
+        setContentView(R.layout.activity_savings_profile);
 
         listView = (ListView) findViewById(R.id.exercise_list);
 
