@@ -7,7 +7,7 @@ import android.view.MenuItem;
 
 import lifesavings.activities.R;
 
-public class SignOutActivity extends ActionBarActivity {
+public class SelectUserActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
