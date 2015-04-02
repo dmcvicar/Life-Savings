@@ -32,5 +32,6 @@
     <string name="title_activity_sign_out">Sign Out</string>
     <string name="title_activity_record_exercise">Record Exercise</string>
     <string name="title_activity_edit_exercise">Edit Exercise</string>
+    <string name="new_user">New User</string>
 
 </resources>

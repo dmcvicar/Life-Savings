@@ -1,9 +1,11 @@
 package lifesavings.db;
 
+import java.io.Serializable;
+
 /**
  * Created by dave on 4/2/15.
  */
-public class User {
+public class User implements Serializable {
 
     private int userid;
     private String name;
@@ -12,6 +14,7 @@ public class User {
     private int height;
     private double bmi;
     private int category;
+    double bfp;
 
     public User() {
 
@@ -174,6 +177,7 @@ public class User {
         this.userid = userid;
     }
 
-    double bfp;
-
+    public String toString() {
+        return name;
+    }
 }
