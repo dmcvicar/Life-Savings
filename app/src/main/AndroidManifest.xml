@@ -33,7 +33,7 @@
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
-            android:name=".SignOutActivity"
+            android:name=".SelectUserActivity"
             android:label="@string/title_activity_sign_out" >
         </activity>
         <activity

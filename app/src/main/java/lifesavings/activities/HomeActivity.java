@@ -52,7 +52,7 @@ public class HomeActivity extends ActionBarActivity {
     }
 
     public void onSignOutClicked(View view) {
-        Intent intent = new Intent(this, SignOutActivity.class);
+        Intent intent = new Intent(this, SelectUserActivity.class);
         startActivity(intent);
     }
 
