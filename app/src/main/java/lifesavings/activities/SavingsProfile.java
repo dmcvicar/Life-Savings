@@ -1,49 +1,78 @@
 package lifesavings.activities;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import lifesavings.db.Excercise;
+import lifesavings.db.ExcerciseDataSource;
+import lifesavings.db.Money;
+import lifesavings.db.MoneyDataSource;
 
 
 public class SavingsProfile extends ActionBarActivity {
-
+    private ExcerciseDataSource exerciseConnect;
+    private MoneyDataSource moneyConnect;
     private ListView listView;
+    private TextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_savings_profile);
+        setContentView(R.layout.activity_exercise_stats);
+        double total = 0;
 
         listView = (ListView) findViewById(R.id.exercise_list);
+        textView = (TextView) findViewById(R.id.running_total);
 
-        //Dumby values for the list
-        String[] saved = new String[]{"Exercise performed this week:\n",
-                "Steps taken: 57   Money Saved:$0.03",
-                "Steps walked: 30   Money Saved:$0.01",
-                "Steps ran: 27   Money Saved:$0.02",
-                "Reps with 50lb weights: 75\nMoney saved:$0.10"
-        };
+        exerciseConnect = new ExcerciseDataSource(this);
+        moneyConnect = new MoneyDataSource(this);
+        try {
+            exerciseConnect.open();
+            moneyConnect.open();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        //Define an adapter
+        List<Excercise> exercises = exerciseConnect.getAllExcercises();
+        List<Money> moneys = moneyConnect.getAllMoneys();
+
+        //construct exercise strings
+        String[] valuesEx = new String[exercises.size() + 1];
+        valuesEx[0] = "Time\tExercise\tDuration\tMoney$aved";
+
+        for (int i = 0; 0 < valuesEx.length; i++) {
+            for (int j = 0; j < moneys.size(); j++) {
+                Excercise cur = exercises.get(i);
+                double cash = 0;
+                if (cur.getExcercise().equals(moneys.get(j).getExcercise())) {
+                    valuesEx[i + 1] = cur.getTime() + "\t" + cur.getExcercise() + "\t" + cur.getDuration();
+                    cash = cur.getDuration() * moneys.get(j).getMoney();
+                    valuesEx[i + 1] = valuesEx[i] + "\t" + cash + "\n";
+                    total += cash;
+                }
+            }
+        }
+        //Use an adapter
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1,saved);
+                android.R.layout.simple_list_item_1,
+                android.R.id.text1, valuesEx);
 
-        //assign the adapter
+        //Set total
+        textView.setText("Your lifetime savings are: " + Double.toString(total));
+        //Apply adapter
         listView.setAdapter(adapter);
-
-        //Assign adapter to ListView
-        listView.setAdapter(adapter);
-
-        //We can add on click listeners to these btdubs
     }
 
-
-
-
-    @Override
+            @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_exercise_stats, menu);
