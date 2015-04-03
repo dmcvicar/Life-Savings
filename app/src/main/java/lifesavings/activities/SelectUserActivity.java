@@ -39,7 +39,7 @@ public class SelectUserActivity extends ActionBarActivity {
         listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getCallingActivity(), HomeActivity.class);
+                Intent intent = new Intent(view.getContext(), HomeActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("USER",(User)parent.getSelectedItem());
                 startActivity(intent,bundle);
