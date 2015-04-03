@@ -12,14 +12,14 @@ import android.widget.TextView;
 import java.sql.SQLException;
 import java.util.List;
 
-import lifesavings.db.Excercise;
-import lifesavings.db.ExcerciseDataSource;
+import lifesavings.db.Exercise;
+import lifesavings.db.ExerciseDataSource;
 import lifesavings.db.Money;
 import lifesavings.db.MoneyDataSource;
 
 
 public class SavingsProfile extends ActionBarActivity {
-    private ExcerciseDataSource exerciseConnect;
+    private ExerciseDataSource exerciseConnect;
     private MoneyDataSource moneyConnect;
     private ListView listView;
     private TextView textView;
@@ -27,13 +27,13 @@ public class SavingsProfile extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_exercise);
+        setContentView(R.layout.activity_savings_profile); //placeholder layout
         double total = 0;
 
         listView = (ListView) findViewById(R.id.exercise_list);
         textView = (TextView) findViewById(R.id.running_total);
 
-        exerciseConnect = new ExcerciseDataSource(this);
+        exerciseConnect = new ExerciseDataSource(this);
         moneyConnect = new MoneyDataSource(this);
         try {
             exerciseConnect.open();
@@ -42,7 +42,7 @@ public class SavingsProfile extends ActionBarActivity {
             e.printStackTrace();
         }
 
-        List<Excercise> exercises = exerciseConnect.getAllExcercises();
+        List<Exercise> exercises = exerciseConnect.getAllExcercises();
         List<Money> moneys = moneyConnect.getAllMoneys();
 
         //construct exercise strings
@@ -51,7 +51,7 @@ public class SavingsProfile extends ActionBarActivity {
 
         for (int i = 0; 0 < valuesEx.length; i++) {
             for (int j = 0; j < moneys.size(); j++) {
-                Excercise cur = exercises.get(i);
+                Exercise cur = exercises.get(i);
                 double cash = 0;
                 if (cur.getExcercise().equals(moneys.get(j).getExcercise())) {
                     valuesEx[i + 1] = cur.getTime() + "\t" + cur.getExcercise() + "\t" + cur.getDuration();
@@ -75,7 +75,7 @@ public class SavingsProfile extends ActionBarActivity {
             @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_exercise_stats, menu);
+        getMenuInflater().inflate(R.menu.menu_edit_profile, menu);
         return true;
     }
 

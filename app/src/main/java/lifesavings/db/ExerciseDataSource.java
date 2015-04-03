@@ -15,11 +15,11 @@ import java.util.List;
 public class ExerciseDataSource {
 
     private SQLiteDatabase database;
-    private ExcerciseSQLHelper helper;
-    private String[] allColumns = { ExcerciseSQLHelper.COLUMN_ID, ExcerciseSQLHelper.COLUMN_USERID, ExcerciseSQLHelper.COLUMN_TIME, ExcerciseSQLHelper.COLUMN_DURATION, ExcerciseSQLHelper.COLUMN_EXCERCISE};
+    private ExerciseSQLHelper helper;
+    private String[] allColumns = { ExerciseSQLHelper.COLUMN_ID, ExerciseSQLHelper.COLUMN_USERID, ExerciseSQLHelper.COLUMN_TIME, ExerciseSQLHelper.COLUMN_DURATION, ExerciseSQLHelper.COLUMN_EXCERCISE};
 
     public ExerciseDataSource(Context context) {
-        helper = new ExcerciseSQLHelper(context);
+        helper = new ExerciseSQLHelper(context);
     }
 
     public void open() throws SQLException {
@@ -32,13 +32,13 @@ public class ExerciseDataSource {
 
     public Exercise createExcercise(int userid, int time, double duration, String excercise) {
         ContentValues values = new ContentValues();
-        values.put(ExcerciseSQLHelper.COLUMN_USERID, userid);
-        values.put(ExcerciseSQLHelper.COLUMN_TIME,time);
-        values.put(ExcerciseSQLHelper.COLUMN_DURATION,duration);
-        values.put(ExcerciseSQLHelper.COLUMN_EXCERCISE,excercise);
+        values.put(ExerciseSQLHelper.COLUMN_USERID, userid);
+        values.put(ExerciseSQLHelper.COLUMN_TIME,time);
+        values.put(ExerciseSQLHelper.COLUMN_DURATION,duration);
+        values.put(ExerciseSQLHelper.COLUMN_EXCERCISE,excercise);
 
-        long insertId = database.insert(ExcerciseSQLHelper.TABLE_EXCERCISE, null, values);
-        Cursor cursor = database.query(ExcerciseSQLHelper.TABLE_EXCERCISE, allColumns, ExcerciseSQLHelper.COLUMN_ID + " = " + insertId, null, null, null, null);
+        long insertId = database.insert(ExerciseSQLHelper.TABLE_EXCERCISE, null, values);
+        Cursor cursor = database.query(ExerciseSQLHelper.TABLE_EXCERCISE, allColumns, ExerciseSQLHelper.COLUMN_ID + " = " + insertId, null, null, null, null);
         cursor.moveToFirst();
         Exercise newExercise = cursorToExcercise(cursor);
         cursor.close();
@@ -47,14 +47,14 @@ public class ExerciseDataSource {
 
     public void deleteExcercise(Exercise Exercise) {
         long id = Exercise.getUserid();
-        database.delete(ExcerciseSQLHelper.TABLE_EXCERCISE, ExcerciseSQLHelper.COLUMN_USERID
+        database.delete(ExerciseSQLHelper.TABLE_EXCERCISE, ExerciseSQLHelper.COLUMN_USERID
                 + " = " + id, null);
     }
 
     public List<Exercise> getAllExcercises() {
         List<Exercise> exercises = new ArrayList<Exercise>();
 
-        Cursor cursor = database.query(ExcerciseSQLHelper.TABLE_EXCERCISE,
+        Cursor cursor = database.query(ExerciseSQLHelper.TABLE_EXCERCISE,
                 allColumns, null, null, null, null, null);
 
         cursor.moveToFirst();

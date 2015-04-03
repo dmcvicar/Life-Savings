@@ -16,7 +16,9 @@ import lifesavings.db.User;
 import lifesavings.view.SlidingTabLayout;
 
 
-public class HomeActivity extends ActionBarActivity implements ProfileSavingsFragment.OnFragmentInteractionListener{
+public class HomeActivity extends ActionBarActivity implements ProfileSavingsFragment.OnFragmentInteractionListener,
+                                                               ExerciseEditFragment.OnFragmentInteractionListener,
+                                                               ExerciseRecordFragment.OnFragmentInteractionListener{
 
     private SlidingTabLayout slidingTabLayout;
     private ViewPager viewPager;
@@ -36,9 +38,9 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
 
         // create a fragment list in order.
         fragments = new ArrayList<>();
+        fragments.add(new ExerciseEditFragment());
+        fragments.add(new ExerciseRecordFragment());
         fragments.add(new ProfileSavingsFragment());
-        /*fragments.add(new HistoryFragment());
-        fragments.add(new SettingsFragment());*/
 
         // use FragmentPagerAdapter to bind the slidingTabLayout (tabs with different titles)
         // and ViewPager (different pages of fragment) together.
@@ -84,13 +86,13 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
     {
 
     }
-    /*public void onFragmentInteractionSettings(Uri uri)
+    public void onFragmentInteractionEdit(Uri uri)
     {
 
     }
-    public void onFragmentInteractionHistory(Uri uri)
+    public void onFragmentInteractionRecord(Uri uri)
     {
 
-    }*/
+    }
     //</editor-fold>
 }

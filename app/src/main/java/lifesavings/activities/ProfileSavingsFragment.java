@@ -14,8 +14,8 @@ import android.widget.TextView;
 import java.sql.SQLException;
 import java.util.List;
 
-import lifesavings.db.Excercise;
-import lifesavings.db.ExcerciseDataSource;
+import lifesavings.db.Exercise;
+import lifesavings.db.ExerciseDataSource;
 import lifesavings.db.Money;
 import lifesavings.db.MoneyDataSource;
 
@@ -77,7 +77,7 @@ public class ProfileSavingsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_profile_savings, container,
                 false);
         double total = 0;
-        ExcerciseDataSource exerciseConnect;
+        ExerciseDataSource exerciseConnect;
         MoneyDataSource moneyConnect;
         ListView listView;
         TextView textView;
@@ -85,7 +85,7 @@ public class ProfileSavingsFragment extends Fragment {
         listView = (ListView) rootView.findViewById(R.id.exercise_list);
         textView = (TextView) rootView.findViewById(R.id.running_total);
 
-        exerciseConnect = new ExcerciseDataSource(getActivity());
+        exerciseConnect = new ExerciseDataSource(getActivity());
         moneyConnect = new MoneyDataSource(getActivity());
         try {
             exerciseConnect.open();
@@ -94,7 +94,7 @@ public class ProfileSavingsFragment extends Fragment {
             e.printStackTrace();
         }
 
-        List<Excercise> exercises = exerciseConnect.getAllExcercises();
+        List<Exercise> exercises = exerciseConnect.getAllExcercises();
         List<Money> moneys = moneyConnect.getAllMoneys();
 
         //construct exercise strings
@@ -103,7 +103,7 @@ public class ProfileSavingsFragment extends Fragment {
 
         for (int i = 0; i < valuesEx.length; i++) {
             for (int j = 0; j < moneys.size(); j++) {
-                Excercise cur = exercises.get(i);
+                Exercise cur = exercises.get(i);
                 double cash = 0;
                 if (cur.getExcercise().equals(moneys.get(j).getExcercise())) {
                     valuesEx[i + 1] = cur.getTime() + "\t" + cur.getExcercise() + "\t" + cur.getDuration();

@@ -7,16 +7,16 @@
     tools:context="lifesavings.activities.SavingsProfile">
 
     <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true">
+    <TextView
+        android:id="@+id/running_total"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true">
-        <TextView
-            android:id="@+id/running_total"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"/>
-    </LinearLayout>
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+</LinearLayout>
 
     <ListView
         android:id="@+id/exercise_list"

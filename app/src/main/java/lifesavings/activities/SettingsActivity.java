@@ -1,5 +1,6 @@
 package lifesavings.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -31,7 +32,14 @@ public class SettingsActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.edit_profile) {
+            Intent intent = new Intent(this, EditProfileActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        if (id == R.id.home) {
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
             return true;
         }
 
