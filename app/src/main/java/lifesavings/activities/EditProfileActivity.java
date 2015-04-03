@@ -1,7 +1,5 @@
 package lifesavings.activities;
 
-import android.content.ContentValues;
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,11 +10,6 @@ import android.widget.RadioButton;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
-import java.sql.SQLException;
-
-import lifesavings.db.User;
-import lifesavings.db.UserDataSource;
-
 
 public class EditProfileActivity extends ActionBarActivity {
 
@@ -24,7 +17,7 @@ public class EditProfileActivity extends ActionBarActivity {
 
     private EditText userName;
     private EditText userAge;
-    private  User currentUser;
+
     private RadioButton userMale;
     private RadioButton userFemale;
     private EditText userWeight;
@@ -34,10 +27,8 @@ public class EditProfileActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-        Intent userInfo = getIntent();
 
         // Restore preferences
-
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 
         userName = (EditText) findViewById(R.id.name_edit_text);
@@ -47,30 +38,13 @@ public class EditProfileActivity extends ActionBarActivity {
         userHeight = (EditText) findViewById(R.id.height_edit_text);
         userWeight = (EditText) findViewById(R.id.weight_edit_text);
 
-        if(userInfo.hasExtra("USER")) {
-            currentUser = (User) userInfo.getSerializableExtra("USER");
-            userName.setText(currentUser.getName());
-            userAge.setText(currentUser.getAge());
-            if (currentUser.getGender().equalsIgnoreCase("Male"))
-            {
-                userMale.setChecked(true);
-                userFemale.setChecked(false);
-            }
-            else
-            {
-                userMale.setChecked(false);
-                userFemale.setChecked(true);
-            }
-            userWeight.setText(currentUser.getWeight());
-            userHeight.setText(currentUser.getHeight());
-        }else {
-            userName.setText(settings.getString("Name", ""));
-            userAge.setText(settings.getString("Age", ""));
-            userMale.setChecked(settings.getBoolean("Male", true));
-            userFemale.setChecked(settings.getBoolean("Female", false));
-            userWeight.setText(settings.getString("Weight", ""));
-            userHeight.setText(settings.getString("Height", ""));
-        }
+        userName.setText(settings.getString("Name",""));
+        userAge.setText(settings.getString("Age",""));
+        userMale.setChecked(settings.getBoolean("Male",true));
+        userFemale.setChecked(settings.getBoolean("Female",false));
+        userWeight.setText(settings.getString("Weight",""));
+        userHeight.setText(settings.getString("Height",""));
+
 
     }
 
@@ -91,22 +65,6 @@ public class EditProfileActivity extends ActionBarActivity {
         editor.putBoolean("Female",userFemale.isChecked());
 
         editor.commit();
-        UserDataSource oldDB = new UserDataSource(this);
-        try {
-            oldDB.open();
-            String gender;
-            gender = "female";
-            if(userMale.isChecked())
-            {
-                gender = "male";
-            }
-            oldDB.updateUser(currentUser.getUserid(),userName.getText().toString(),
-                    Integer.parseInt(userAge.getText().toString()),Double.parseDouble(userWeight.getText().toString()),
-                    Double.parseDouble(userHeight.getText().toString()),gender);
-
-        }catch (SQLException e){
-            String error =  e.getMessage().toString();
-        }
 
     }
 

@@ -11,7 +11,7 @@ import android.util.Log;
 
 public class ExcerciseSQLHelper extends SQLiteOpenHelper {
 
-    public static final String TABLE_EXCERCISE = "excercise";
+    public static final String TABLE_EXCERCISE = "exercise";
     public static final String COLUMN_ID = "rowid";
     public static final String COLUMN_USERID = "userid";
     public static final String COLUMN_TIME = "time";
@@ -19,7 +19,7 @@ public class ExcerciseSQLHelper extends SQLiteOpenHelper {
     public static final String COLUMN_EXCERCISE = "excercise";
 
 
-    private static final String DATABASE_NAME = "students.db";
+    private static final String DATABASE_NAME = "exercise.db";
     private static final int DATABASE_VERSION = 1;
 
     private static final String DATABASE_CREATE =

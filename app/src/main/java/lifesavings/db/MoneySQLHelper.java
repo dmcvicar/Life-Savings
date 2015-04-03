@@ -17,7 +17,7 @@ public class MoneySQLHelper extends SQLiteOpenHelper {
     public static final String COLUMN_MONEY = "money";
 
 
-    private static final String DATABASE_NAME = "students.db";
+    private static final String DATABASE_NAME = "money.db";
     private static final int DATABASE_VERSION = 1;
 
     private static final String DATABASE_CREATE =

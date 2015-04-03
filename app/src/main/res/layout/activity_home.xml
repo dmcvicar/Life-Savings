@@ -19,13 +19,7 @@
         android:paddingBottom="@dimen/activity_vertical_margin"
         tools:context=".HomeActivity">
 
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"/>
-
-        <Button
+       <!-- <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/edit_profile"
@@ -53,9 +47,18 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/sign_out"
-            android:onClick="onSignOutClicked"/>
+            android:onClick="onSignOutClicked"/>-->
 
+        <lifesavings.view.SlidingTabLayout
+            android:id="@+id/tab"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
 
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/tab"/>
 
 
 

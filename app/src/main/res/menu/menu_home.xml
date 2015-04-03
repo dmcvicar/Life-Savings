@@ -3,4 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".HomeActivity">
     <item android:id="@+id/action_settings" android:title="@string/settings"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/edit_profile" android:title="@string/edit_profile"
+        android:orderInCategory="100" app:showAsAction="never" />
 </menu>

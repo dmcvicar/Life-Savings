@@ -1,18 +1,21 @@
 package lifesavings.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import lifesavings.activities.R;
+import lifesavings.db.User;
 
-public class SignOutActivity extends ActionBarActivity {
+public class SelectUserActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_out);
+        setContentView(R.layout.activity_select_user);
     }
 
 
@@ -36,5 +39,10 @@ public class SignOutActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onCreateUser(View view) {
+        Intent intent = new Intent(this, EditProfileActivity.class);
+        startActivity(intent);
     }
 }
