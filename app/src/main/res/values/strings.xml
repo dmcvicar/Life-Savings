@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Life Savings</string>
-    <string name="edit_exercise">Edit Exercise</string>
+    <string name="edit_exercise">Enter Your Exercise Information</string>
     <string name="savings_profile">Your Savings Profile</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="record_exercise">Record Exercise</string>
@@ -32,5 +32,22 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="new_user">New User</string>
     <string name="home">Home</string>
+    <string name="date_text">Set Date</string>
+    <string name="time_text">Set Time</string>
+    <string name="duration_text">Set Duration</string>
+    <string name="sel_exercise">Select Exercise</string>
+    <string name="submit">Submit</string>
+
+    <string-array name="exercises">
+        <item>Walking</item>
+        <item>Jogging</item>
+        <item>Running</item>
+        <item>Rowing</item>
+        <item>Swimming</item>
+        <item>Hiking</item>
+        <item>Biking</item>
+        <item>Lifting</item>
+    </string-array>
+
 
 </resources>

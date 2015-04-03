@@ -24,7 +24,7 @@ public class ExerciseSQLHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_CREATE =
             "CREATE TABLE " + TABLE_EXCERCISE
-                    + "(" + COLUMN_ID + " INTEGER PRIMARY KEY, "
+                    + " (" + COLUMN_ID + "INTEGER PRIMARY KEY, "
                     + COLUMN_USERID + " INTEGER NOT NULL,"
                     + COLUMN_TIME + " INTEGER NOT NULL,"
                     + COLUMN_DURATION + " INTEGER NOT NULL, "

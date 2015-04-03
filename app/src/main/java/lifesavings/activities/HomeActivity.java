@@ -9,9 +9,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TimePicker;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import lifesavings.db.ExerciseDataSource;
 import lifesavings.db.User;
 import lifesavings.view.SlidingTabLayout;
 
@@ -50,6 +56,8 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
         // make sure the tabs are equally spaced.
         slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(viewPager);
+
+
     }
 
     @Override
@@ -79,6 +87,51 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    //Fragment UI listeners below
+
+    public void onSetTime(View view){
+        TimePicker tp = (TimePicker) findViewById(R.id.timePicker);
+        if(tp.getVisibility() == View.VISIBLE)
+            tp.setVisibility(View.GONE);
+        else
+            tp.setVisibility(View.VISIBLE);
+
+    }
+
+    public void onSetDate(View view){
+        DatePicker dp = (DatePicker) findViewById(R.id.datePicker);
+        if(dp.getVisibility() == View.VISIBLE)
+            dp.setVisibility(View.GONE);
+        else
+            dp.setVisibility(View.VISIBLE);
+    }
+
+    public void onSubmitEdit(View view) throws SQLException {
+        TimePicker tp = (TimePicker) findViewById(R.id.timePicker);
+        DatePicker dp = (DatePicker) findViewById(R.id.datePicker);
+        EditText et = (EditText) findViewById(R.id.duration);
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+
+
+        StringBuilder date_time = new StringBuilder();
+
+        date_time.append(dp.getDayOfMonth());
+        date_time.append(dp.getMonth());
+        date_time.append(dp.getYear());
+        date_time.append(tp.getCurrentHour());
+        date_time.append(tp.getCurrentMinute());
+
+        long dt = Long.parseLong(date_time.toString().trim());
+        double duration = Double.parseDouble(et.getText().toString());
+        String exercise = spinner.getSelectedItem().toString();
+
+        ExerciseDataSource dataSource = new ExerciseDataSource(this);
+        dataSource.open();
+        dataSource.createExcercise(101101,dt,duration,exercise);
+        dataSource.close();
     }
 
     //<editor-fold desc="Implementing Interfaces">

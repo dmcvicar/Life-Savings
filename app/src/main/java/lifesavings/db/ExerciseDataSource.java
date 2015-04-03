@@ -30,7 +30,7 @@ public class ExerciseDataSource {
         helper.close();
     }
 
-    public Exercise createExcercise(int userid, int time, double duration, String excercise) {
+    public Exercise createExcercise(int userid, long time, double duration, String excercise) {
         ContentValues values = new ContentValues();
         values.put(ExerciseSQLHelper.COLUMN_USERID, userid);
         values.put(ExerciseSQLHelper.COLUMN_TIME,time);
@@ -72,7 +72,7 @@ public class ExerciseDataSource {
         Exercise Exercise = new Exercise();
         Exercise.setId(cursor.getInt(0));
         Exercise.setUserid(cursor.getInt(1));
-        Exercise.setTime(cursor.getInt(2));
+        Exercise.setTime(cursor.getLong(2));
         Exercise.setDuration(cursor.getDouble(3));
         Exercise.setExcercise(cursor.getString(4));
         return Exercise;

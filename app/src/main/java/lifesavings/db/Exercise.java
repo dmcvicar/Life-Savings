@@ -7,14 +7,14 @@ public class Exercise {
 
     private int id;
     private int userid;
-    private int time;
+    private long time;
     private double duration;
 
     public Exercise() {
 
     }
 
-    public Exercise(int rowid, int userid, int time, double duration, String excercise) {
+    public Exercise(int rowid, int userid, long time, double duration, String excercise) {
         this.id = rowid;
         this.userid = userid;
         this.time = time;
@@ -40,11 +40,11 @@ public class Exercise {
         this.duration = duration;
     }
 
-    public int getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(long time) {
         this.time = time;
     }
 
