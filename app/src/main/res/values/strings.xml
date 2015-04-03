@@ -25,8 +25,7 @@
     <string name="coming_soon">This activity and its functionality will be added in the next cycle!</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_food">notinuse</string>
-    <string name="title_activity_sign_out">Sign Out</string>
+    <string name="title_activity_select_user">Select User</string>
     <string name="title_activity_record_exercise">Record Exercise</string>
     <string name="title_activity_edit_exercise">Edit Exercise</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
