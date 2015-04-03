@@ -1,9 +1,12 @@
 package lifesavings.db;
 
+import java.io.Serializable;
+
 /**
  * Created by dave on 4/2/15.
+ * Modified by Josh on 4/2/15 6:00pm.
  */
-public class User {
+public class User  implements Serializable {
 
     private int userid;
     private String name;
@@ -12,12 +15,13 @@ public class User {
     private int height;
     private double bmi;
     private int category;
+    private int age;
 
     public User() {
 
     }
 
-    public User(int userid, String name, String gender, int weight, int height, int bmi, int category, double bfp) {
+    public User(int userid, String name, String gender, int weight, int height, int bmi, int category, double bfp, int age) {
         this.userid = userid;
         this.name = name;
         this.gender = gender;
@@ -26,8 +30,9 @@ public class User {
         this.bmi = bmi;
         this.category = category;
         this.bfp = bfp;
+        this.age = age;
     }
-    public User(int userid, String name, String gender, int weight, int height, int bmi, int category) {
+    public User(int userid, String name, String gender, int weight, int height, int bmi, int category, int age) {
         this.userid = userid;
         this.name = name;
         this.gender = gender;
@@ -36,8 +41,9 @@ public class User {
         this.bmi = bmi;
         this.category = category;
         this.bfp = -1;
+        this.age = age;
     }
-    public User(int userid, String name, String gender, int weight, int height, int bmi) {
+    public User(int userid, String name, String gender, int weight, int height, int bmi, int age) {
         this.userid = userid;
         this.name = name;
         this.gender = gender;
@@ -46,9 +52,10 @@ public class User {
         this.bmi = bmi;
         this.category = calcCategory(this.bmi);
         this.bfp = -1;
+        this.age = age;
     }
 
-    public User (int userid, String name, String gender, int weight, int height){
+    public User (int userid, String name, String gender, int weight, int height, int age){
         this.userid = userid;
         this.name = name;
         this.gender = gender;
@@ -57,6 +64,7 @@ public class User {
         this.bmi = calcBMI(weight,height);
         this.category = calcCategory(this.bmi);
         this.bfp = -1;
+        this.age = age;
     }
     public static double calcBMI(int weight, int height){
         // dw = double weight, dh = double height for accuracy reasons.
@@ -174,6 +182,9 @@ public class User {
         this.userid = userid;
     }
 
+    public int getAge() { return age; }
+
+    public void setAge(int age) { this.age = age; }
     double bfp;
 
 }

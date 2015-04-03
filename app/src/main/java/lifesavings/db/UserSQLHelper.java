@@ -10,10 +10,11 @@ import android.util.Log;
  */
 
 public class UserSQLHelper extends SQLiteOpenHelper {
-
+    public static int uIDCounter;
     public static final String TABLE_USERS = "users";
     public static final String COLUMN_USERID = "userid";
     public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_AGE = "age";
     public static final String COLUMN_GENDER = "gender";
     public static final String COLUMN_WEIGHT = "weight";
     public static final String COLUMN_HEIGHT = "height";
@@ -30,10 +31,11 @@ public class UserSQLHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TABLE_USERS
                     + "(" + COLUMN_USERID + " INTEGER PRIMARY KEY, "
                     + COLUMN_NAME + " TEXT NOT NULL, "
+                    + COLUMN_AGE + " INTEGER NOT NULL"
                     + COLUMN_GENDER + " TEXT NOT NULL, "
-                    + COLUMN_WEIGHT + " INTEGER NOT NULL, "
-                    + COLUMN_HEIGHT + " INTEGER NOT NULL,"
-                    + COLUMN_BMI + " INTEGER NOT NULL,"
+                    + COLUMN_WEIGHT + " REAL NOT NULL, "
+                    + COLUMN_HEIGHT + " REAL NOT NULL,"
+                    + COLUMN_BMI + " REAL NOT NULL,"
                     + COLUMN_CATEGORY + " INTEGER NOT NULL,"
                     + COLUMN_BFP + " REAL NOT NULL);";
 
