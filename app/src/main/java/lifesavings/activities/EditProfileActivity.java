@@ -89,11 +89,11 @@ public class EditProfileActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
             return true;
-        }
+        }*/
         if (id == R.id.home) {
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
