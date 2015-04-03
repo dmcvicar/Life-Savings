@@ -1,19 +1,48 @@
 package lifesavings.activities;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.ArrayList;
 
-public class HomeActivity extends ActionBarActivity {
+import lifesavings.view.SlidingTabLayout;
 
+
+public class HomeActivity extends ActionBarActivity implements ProfileSavingsFragment.OnFragmentInteractionListener{
+
+    private SlidingTabLayout slidingTabLayout;
+    private ViewPager viewPager;
+    private ArrayList<Fragment> fragments;
+    private LifeSavingsTabsViewPagerAdapter myViewPageAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        slidingTabLayout = (SlidingTabLayout) findViewById(R.id.tab);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+
+        // create a fragment list in order.
+        fragments = new ArrayList<>();
+        fragments.add(new ProfileSavingsFragment());
+        /*fragments.add(new HistoryFragment());
+        fragments.add(new SettingsFragment());*/
+
+        // use FragmentPagerAdapter to bind the slidingTabLayout (tabs with different titles)
+        // and ViewPager (different pages of fragment) together.
+        myViewPageAdapter = new LifeSavingsTabsViewPagerAdapter(getSupportFragmentManager(), fragments);
+        viewPager.setAdapter(myViewPageAdapter);
+
+        // make sure the tabs are equally spaced.
+        slidingTabLayout.setDistributeEvenly(true);
+        slidingTabLayout.setViewPager(viewPager);
     }
 
     @Override
@@ -36,33 +65,27 @@ public class HomeActivity extends ActionBarActivity {
             startActivity(intent);
             return true;
         }
+        if (id == R.id.edit_profile) {
+            Intent intent = new Intent(this, EditProfileActivity.class);
+            startActivity(intent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void onSavingsClicked(View view) {
-        Intent intent = new Intent(this, SavingsProfile.class);
-        startActivity(intent);
-    }
+    //<editor-fold desc="Implementing Interfaces">
+    public void onFragmentInteractionSavings(Uri uri)
+    {
 
-
-    public void onEditProfileClicked(View view) {
-        Intent intent = new Intent(this, EditProfileActivity.class);
-        startActivity(intent);
     }
+    /*public void onFragmentInteractionSettings(Uri uri)
+    {
 
-    public void onSignOutClicked(View view) {
-        Intent intent = new Intent(this, SelectUserActivity.class);
-        startActivity(intent);
     }
+    public void onFragmentInteractionHistory(Uri uri)
+    {
 
-    public void onRecordExerciseClicked(View view) {
-        Intent intent = new Intent(this, RecordExerciseActivity.class);
-        startActivity(intent);
-    }
-
-    public void onEditExerciseClicked(View view) {
-        Intent intent = new Intent(this, EditExerciseActivity.class);
-        startActivity(intent);
-    }
+    }*/
+    //</editor-fold>
 }

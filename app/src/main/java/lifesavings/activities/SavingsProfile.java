@@ -27,7 +27,7 @@ public class SavingsProfile extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_exercise_stats);
+        setContentView(R.layout.activity_edit_exercise);
         double total = 0;
 
         listView = (ListView) findViewById(R.id.exercise_list);
