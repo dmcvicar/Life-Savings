@@ -14,6 +14,7 @@ public class User implements Serializable {
     private int height;
     private double bmi;
     private int category;
+    double bfp;
 
     public User() {
 
@@ -175,7 +176,5 @@ public class User implements Serializable {
     public void setUserid(int userid) {
         this.userid = userid;
     }
-
-    double bfp;
 
 }

@@ -10,15 +10,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.sql.SQLException;
 import java.util.List;
 
-import lifesavings.activities.R;
 import lifesavings.db.User;
 import lifesavings.db.UserDataSource;
 
 public class SelectUserActivity extends ActionBarActivity {
-
-    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +24,9 @@ public class SelectUserActivity extends ActionBarActivity {
         setContentView(R.layout.activity_select_user);
 
         UserDataSource datasource = new UserDataSource(this);
-        datasource.open();
+        try{
+            datasource.open();
+        } catch(SQLException sqle) {}
 
         List<User> values = datasource.getAllUsers();
 
@@ -35,7 +35,7 @@ public class SelectUserActivity extends ActionBarActivity {
         ArrayAdapter<User> adapter = new ArrayAdapter<User>(this,
                 android.R.layout.simple_list_item_1, values);
 
-        listView = (ListView) findViewById(R.id.list);
+        ListView listView = (ListView) findViewById(R.id.user_list);
         listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

@@ -12,6 +12,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import lifesavings.db.User;
 import lifesavings.view.SlidingTabLayout;
 
 
@@ -21,10 +22,14 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
     private ViewPager viewPager;
     private ArrayList<Fragment> fragments;
     private LifeSavingsTabsViewPagerAdapter myViewPageAdapter;
+    private User currentUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        currentUser = (User)getIntent().getSerializableExtra("USER");
 
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.tab);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
