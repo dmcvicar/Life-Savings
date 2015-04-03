@@ -9,7 +9,7 @@ import android.util.Log;
  * Created by dave on 4/2/15.
  */
 
-public class ExcerciseSQLHelper extends SQLiteOpenHelper {
+public class ExerciseSQLHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_EXCERCISE = "exercise";
     public static final String COLUMN_ID = "rowid";
@@ -30,7 +30,7 @@ public class ExcerciseSQLHelper extends SQLiteOpenHelper {
                     + COLUMN_DURATION + " INTEGER NOT NULL, "
                     + COLUMN_EXCERCISE + " TEXT NOT NULL);";
 
-    public ExcerciseSQLHelper(Context context) {
+    public ExerciseSQLHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -41,7 +41,7 @@ public class ExcerciseSQLHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(ExcerciseSQLHelper.class.getName(),
+        Log.w(ExerciseSQLHelper.class.getName(),
                 "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXCERCISE);
         onCreate(db);

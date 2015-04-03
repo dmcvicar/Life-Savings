@@ -3,18 +3,18 @@ package lifesavings.db;
 /**
  * Created by dave on 4/2/15.
  */
-public class Excercise {
+public class Exercise {
 
     private int id;
     private int userid;
     private int time;
     private double duration;
 
-    public Excercise() {
+    public Exercise() {
 
     }
 
-    public Excercise(int rowid, int userid, int time, double duration, String excercise) {
+    public Exercise(int rowid, int userid, int time, double duration, String excercise) {
         this.id = rowid;
         this.userid = userid;
         this.time = time;

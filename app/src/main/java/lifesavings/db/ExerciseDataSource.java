@@ -12,13 +12,13 @@ import java.util.List;
 /**
  * Created by dave on 4/2/15.
  */
-public class ExcerciseDataSource {
+public class ExerciseDataSource {
 
     private SQLiteDatabase database;
     private ExcerciseSQLHelper helper;
     private String[] allColumns = { ExcerciseSQLHelper.COLUMN_ID, ExcerciseSQLHelper.COLUMN_USERID, ExcerciseSQLHelper.COLUMN_TIME, ExcerciseSQLHelper.COLUMN_DURATION, ExcerciseSQLHelper.COLUMN_EXCERCISE};
 
-    public ExcerciseDataSource(Context context) {
+    public ExerciseDataSource(Context context) {
         helper = new ExcerciseSQLHelper(context);
     }
 
@@ -30,7 +30,7 @@ public class ExcerciseDataSource {
         helper.close();
     }
 
-    public Excercise createExcercise(int userid, int time, double duration, String excercise) {
+    public Exercise createExcercise(int userid, int time, double duration, String excercise) {
         ContentValues values = new ContentValues();
         values.put(ExcerciseSQLHelper.COLUMN_USERID, userid);
         values.put(ExcerciseSQLHelper.COLUMN_TIME,time);
@@ -40,42 +40,42 @@ public class ExcerciseDataSource {
         long insertId = database.insert(ExcerciseSQLHelper.TABLE_EXCERCISE, null, values);
         Cursor cursor = database.query(ExcerciseSQLHelper.TABLE_EXCERCISE, allColumns, ExcerciseSQLHelper.COLUMN_ID + " = " + insertId, null, null, null, null);
         cursor.moveToFirst();
-        Excercise newExcercise = cursorToExcercise(cursor);
+        Exercise newExercise = cursorToExcercise(cursor);
         cursor.close();
-        return newExcercise;
+        return newExercise;
     }
 
-    public void deleteExcercise(Excercise Excercise) {
-        long id = Excercise.getUserid();
+    public void deleteExcercise(Exercise Exercise) {
+        long id = Exercise.getUserid();
         database.delete(ExcerciseSQLHelper.TABLE_EXCERCISE, ExcerciseSQLHelper.COLUMN_USERID
                 + " = " + id, null);
     }
 
-    public List<Excercise> getAllExcercises() {
-        List<Excercise> Excercises = new ArrayList<Excercise>();
+    public List<Exercise> getAllExcercises() {
+        List<Exercise> exercises = new ArrayList<Exercise>();
 
         Cursor cursor = database.query(ExcerciseSQLHelper.TABLE_EXCERCISE,
                 allColumns, null, null, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Excercise Excercise = cursorToExcercise(cursor);
-            Excercises.add(Excercise);
+            Exercise Exercise = cursorToExcercise(cursor);
+            exercises.add(Exercise);
             cursor.moveToNext();
         }
         // make sure to close the cursor
         cursor.close();
-        return Excercises;
+        return exercises;
     }
 
-    private Excercise cursorToExcercise(Cursor cursor) {
-        Excercise Excercise = new Excercise();
-        Excercise.setId(cursor.getInt(0));
-        Excercise.setUserid(cursor.getInt(1));
-        Excercise.setTime(cursor.getInt(2));
-        Excercise.setDuration(cursor.getDouble(3));
-        Excercise.setExcercise(cursor.getString(4));
-        return Excercise;
+    private Exercise cursorToExcercise(Cursor cursor) {
+        Exercise Exercise = new Exercise();
+        Exercise.setId(cursor.getInt(0));
+        Exercise.setUserid(cursor.getInt(1));
+        Exercise.setTime(cursor.getInt(2));
+        Exercise.setDuration(cursor.getDouble(3));
+        Exercise.setExcercise(cursor.getString(4));
+        return Exercise;
     }
 
 }
