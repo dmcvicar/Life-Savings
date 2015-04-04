@@ -13,7 +13,7 @@ import java.util.List;
  * Created by dave on 4/2/15.
  */
 public class UserDataSource {
-
+    private static int autoId;
     private static User currentUser;
     private SQLiteDatabase database;
     private UserSQLHelper helper;
@@ -21,6 +21,7 @@ public class UserDataSource {
 
     public UserDataSource(Context context) {
         helper = new UserSQLHelper(context);
+        autoId = 0;
     }
 
     public void open() throws SQLException {
@@ -33,6 +34,8 @@ public class UserDataSource {
 
     public User createUser(String name,int age, String gender, int weight, int height) {
         ContentValues values = new ContentValues();
+        values.put(UserSQLHelper.COLUMN_USERID,autoId);
+        autoId++;
         values.put(UserSQLHelper.COLUMN_NAME,name);
         values.put(UserSQLHelper.COLUMN_AGE, age);
         values.put(UserSQLHelper.COLUMN_GENDER,gender);
@@ -49,7 +52,7 @@ public class UserDataSource {
         cursor.close();
         return newUser;
     }
-    public void updateUser(int userID, String name, int age, double weight, double height, String gender){
+    public void updateUser(int userID, String name, int age, int weight, int height, String gender){
         ContentValues dataToInsert = new ContentValues();
         dataToInsert.put("name", name);
         dataToInsert.put("age", age);

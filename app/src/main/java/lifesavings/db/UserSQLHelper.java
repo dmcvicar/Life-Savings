@@ -31,12 +31,12 @@ public class UserSQLHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TABLE_USERS
                     + "(" + COLUMN_USERID + " INTEGER PRIMARY KEY, "
                     + COLUMN_NAME + " TEXT NOT NULL, "
-                    + COLUMN_AGE + " INTEGER NOT NULL"
+                    + COLUMN_AGE + " INTEGER NOT NULL, "
                     + COLUMN_GENDER + " TEXT NOT NULL, "
                     + COLUMN_WEIGHT + " REAL NOT NULL, "
-                    + COLUMN_HEIGHT + " REAL NOT NULL,"
-                    + COLUMN_BMI + " REAL NOT NULL,"
-                    + COLUMN_CATEGORY + " INTEGER NOT NULL,"
+                    + COLUMN_HEIGHT + " REAL NOT NULL, "
+                    + COLUMN_BMI + " REAL NOT NULL, "
+                    + COLUMN_CATEGORY + " INTEGER NOT NULL, "
                     + COLUMN_BFP + " REAL NOT NULL);";
 
     public UserSQLHelper(Context context) {

@@ -47,7 +47,7 @@
                 android:text="@string/age_text_field"
                 />
             <EditText
-                android:numeric="decimal"
+                android:numeric="integer"
                 android:layout_below="@+id/age_text_view"
                 android:layout_width= "fill_parent"
                 android:layout_height= "wrap_content"
