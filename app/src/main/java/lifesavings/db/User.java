@@ -1,11 +1,12 @@
 package lifesavings.db;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by dave on 4/2/15.
  */
-public class User implements Serializable {
+public class User {
 
     private int userid;
     private String name;
@@ -21,7 +22,7 @@ public class User implements Serializable {
 
     }
 
-    public User(int userid, String name, String gender, int weight, int height, int bmi, int category, double bfp, int age) {
+    public User(int userid, String name, String gender, int weight, int height, double bmi, int category, double bfp, int age) {
         this.userid = userid;
         this.name = name;
         this.gender = gender;
@@ -32,7 +33,7 @@ public class User implements Serializable {
         this.bfp = bfp;
         this.age = age;
     }
-    public User(int userid, String name, String gender, int weight, int height, int bmi, int category,int age) {
+    public User(int userid, String name, String gender, int weight, int height, double bmi, int category,int age) {
         this.userid = userid;
         this.name = name;
         this.gender = gender;
@@ -43,7 +44,7 @@ public class User implements Serializable {
         this.bfp = -1;
         this.age = age;
     }
-    public User(int userid, String name, String gender, int weight, int height, int bmi, int age) {
+    public User(int userid, String name, String gender, int weight, int height, double bmi, int age) {
         this.userid = userid;
         this.name = name;
         this.gender = gender;
@@ -139,7 +140,7 @@ public class User implements Serializable {
         return bmi;
     }
 
-    public void setBmi(int bmi) {
+    public void setBmi(double bmi) {
         this.bmi = bmi;
     }
 
@@ -186,5 +187,37 @@ public class User implements Serializable {
     public int getAge() { return age; }
 
     public void setAge(int age) { this.age = age; }
+
+    public String toString() {
+        return name;
+    }
+
+    public ArrayList<String> toArrayList() {
+        ArrayList<String> data = new ArrayList<String>();
+        data.add(Integer.toString(userid));
+        data.add(name);
+        data.add(gender);
+        data.add(Integer.toString(weight));
+        data.add(Integer.toString(height));
+        data.add(Double.toString(bmi));
+        data.add(Integer.toString(category));
+        data.add(Double.toString(bfp));
+        data.add(Integer.toString(age));
+        return data;
+    }
+
+    public static User fromArrayList( ArrayList<String> data) {
+        User out = new User(
+                Integer.parseInt(data.get(0)),
+                data.get(1),
+                data.get(2),
+                Integer.parseInt(data.get(3)),
+                Integer.parseInt(data.get(4)),
+                Double.parseDouble(data.get(5)),
+                Integer.parseInt(data.get(6)),
+                Double.parseDouble(data.get(7)),
+                Integer.parseInt(data.get(8)));
+        return out;
+    }
 
 }

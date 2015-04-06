@@ -37,7 +37,9 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        currentUser = (User)getIntent().getSerializableExtra("USER");
+        currentUser = User.fromArrayList(getIntent().getStringArrayListExtra("USER"));
+        setTitle("User: " + currentUser.getName());
+
 
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.tab);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -82,6 +84,7 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
         }*/
         if (id == R.id.edit_profile) {
             Intent intent = new Intent(this, EditProfileActivity.class);
+            intent.putStringArrayListExtra("USER",currentUser.toArrayList());
             startActivity(intent);
             return true;
         }

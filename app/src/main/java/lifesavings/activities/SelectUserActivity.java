@@ -36,17 +36,14 @@ public class SelectUserActivity extends ActionBarActivity {
                 android.R.layout.simple_list_item_1, values);
 
         ListView listView = (ListView) findViewById(R.id.user_list);
-        listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                User selectedUser = (User)parent.getItemAtPosition(position);
                 Intent intent = new Intent(view.getContext(), HomeActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("USER",(User)parent.getSelectedItem());
-                startActivity(intent,bundle);
+                intent.putStringArrayListExtra("USER",selectedUser.toArrayList());
+                startActivity(intent);
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
         listView.setAdapter(adapter);

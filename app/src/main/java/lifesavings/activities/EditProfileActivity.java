@@ -8,14 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.content.SharedPreferences;
-import android.widget.Toast;
-
-import java.sql.SQLException;
 
 import lifesavings.db.UserDataSource;
 import lifesavings.db.User;
-import lifesavings.db.UserSQLHelper;
 
 
 public class EditProfileActivity extends ActionBarActivity {
@@ -24,7 +19,6 @@ public class EditProfileActivity extends ActionBarActivity {
 
     private EditText userName;
     private EditText userAge;
-    private UserDataSource ugh;
     private RadioButton userMale;
     private RadioButton userFemale;
     private EditText userWeight;
@@ -38,14 +32,7 @@ public class EditProfileActivity extends ActionBarActivity {
         oldDB = new UserDataSource(this);
         try {
             oldDB.open();
-        }catch(Exception e){
-
-        }
-
-//        UserDataSource.setCurrentUser(ugh.createUser("Josh",22,"male",170,73));
-        User primary =  UserDataSource.getCurrentUser();
-        // Restore preferences
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        }catch(Exception e){}
 
         userName = (EditText) findViewById(R.id.name_edit_text);
         userAge = (EditText) findViewById(R.id.age_edit_text);
@@ -53,7 +40,9 @@ public class EditProfileActivity extends ActionBarActivity {
         userFemale = (RadioButton) findViewById(R.id.female_gender_radbutton);
         userHeight = (EditText) findViewById(R.id.height_edit_text);
         userWeight = (EditText) findViewById(R.id.weight_edit_text);
-        if(primary != null) {
+
+        if(getIntent().hasExtra("USER")) {
+            User primary =  User.fromArrayList(getIntent().getStringArrayListExtra("USER"));
             userName.setText(primary.getName());
             userAge.setText("" + primary.getAge());
             if (primary.getGender().equalsIgnoreCase("male")) {
@@ -76,54 +65,22 @@ public class EditProfileActivity extends ActionBarActivity {
     }
 
     public void infoSave(View view){
-        /*Toast.makeText(getApplicationContext(), "Saved",
-                Toast.LENGTH_LONG).show();
-
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        SharedPreferences.Editor editor = settings.edit();
-
-        editor.putString("Name",userName.getText().toString());
-        editor.putString("Age",userAge.getText().toString());
-        editor.putString("Weight",userWeight.getText().toString());
-        editor.putString("Height",userHeight.getText().toString());
-
-        //Radio buttons save
-        editor.putBoolean("Male",userMale.isChecked());
-        editor.putBoolean("Female",userFemale.isChecked());
-
-        editor.commit();*/
-         //oldDB = new UserDataSource(this);
-        //try {
-            //oldDB.open();
-            String gender;
-            gender = "female";
-            if(userMale.isChecked())
-            {
-                gender = "male";
-            }
-        if(UserDataSource.getCurrentUser() != null) {
-            oldDB.updateUser(UserDataSource.getCurrentUser().getUserid(), userName.getText().toString(),
-                    Integer.parseInt(userAge.getText().toString()), Integer.parseInt(userWeight.getText().toString()),
-                    Integer.parseInt(userHeight.getText().toString()), gender);
-            UserDataSource.setCurrentUser(ugh.createUser(userName.getText().toString(), Integer.parseInt(userAge.getText().toString()), gender, Integer.parseInt(userWeight.getText().toString()), Integer.parseInt(userHeight.getText().toString())));
+        User currentUser = new User();
+        Intent intent = new Intent(this,HomeActivity.class);
+        if(getIntent().hasExtra("USER")) {
+            currentUser = getUserFromInput(User.fromArrayList(getIntent().getStringArrayListExtra("USER")).getUserid());
+            oldDB.updateUser(currentUser);
+            intent.putStringArrayListExtra("USER",currentUser.toArrayList());
         }else{
-            oldDB.createUser( userName.getText().toString(),
-                    Integer.parseInt(userAge.getText().toString()),gender, Integer.parseInt(userWeight.getText().toString()),
-                    Integer.parseInt(userHeight.getText().toString()) );
-            UserDataSource.setCurrentUser(ugh.createUser(userName.getText().toString(), Integer.parseInt(userAge.getText().toString()), gender, Integer.parseInt(userWeight.getText().toString()), Integer.parseInt(userHeight.getText().toString())));
-
+            currentUser = getUserFromInput(-1);
+            oldDB.createUser(currentUser);
+            intent.putStringArrayListExtra("USER",currentUser.toArrayList());
         }
-       // }catch (SQLException e){
-        //    String error =  e.getMessage().toString();
-        //}
-
-
-
-
-}
+        startActivity(intent);
+    }
 
     public void infoCancel(View view){
-        return;
+        finish();
     }
 
 
@@ -154,5 +111,21 @@ public class EditProfileActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private User getUserFromInput(int userId) {
+        String gender;
+        gender = "female";
+        if(userMale.isChecked())
+        {
+            gender = "male";
+        }
+        User user = new User(userId,
+                userName.getText().toString(),
+                gender,
+                Integer.parseInt(userWeight.getText().toString()),
+                Integer.parseInt(userHeight.getText().toString()),
+                Integer.parseInt(userAge.getText().toString()));
+        return user;
     }
 }

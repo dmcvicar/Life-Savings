@@ -14,7 +14,6 @@ import java.util.List;
  */
 public class UserDataSource {
     private static int autoId;
-    private static User currentUser;
     private SQLiteDatabase database;
     private UserSQLHelper helper;
     private String[] allColumns = { UserSQLHelper.COLUMN_USERID, UserSQLHelper.COLUMN_NAME, UserSQLHelper.COLUMN_GENDER, UserSQLHelper.COLUMN_WEIGHT, UserSQLHelper.COLUMN_HEIGHT, UserSQLHelper.COLUMN_BMI, UserSQLHelper.COLUMN_CATEGORY, UserSQLHelper.COLUMN_BFP};
@@ -32,18 +31,16 @@ public class UserDataSource {
         helper.close();
     }
 
-    public User createUser(String name,int age, String gender, int weight, int height) {
+    public User createUser(User user) {
         ContentValues values = new ContentValues();
-        values.put(UserSQLHelper.COLUMN_USERID,autoId);
-        autoId++;
-        values.put(UserSQLHelper.COLUMN_NAME,name);
-        values.put(UserSQLHelper.COLUMN_AGE, age);
-        values.put(UserSQLHelper.COLUMN_GENDER,gender);
-        values.put(UserSQLHelper.COLUMN_WEIGHT,weight);
-        values.put(UserSQLHelper.COLUMN_HEIGHT,height);
-        values.put(UserSQLHelper.COLUMN_BMI,User.calcBMI(weight,height));
-        values.put(UserSQLHelper.COLUMN_CATEGORY,User.calcCategory(User.calcBMI(weight,height)));
-        values.put(UserSQLHelper.COLUMN_BFP,-1);
+        values.put(UserSQLHelper.COLUMN_NAME,user.getName());
+        values.put(UserSQLHelper.COLUMN_AGE, user.getAge());
+        values.put(UserSQLHelper.COLUMN_GENDER,user.getGender());
+        values.put(UserSQLHelper.COLUMN_WEIGHT,user.getWeight());
+        values.put(UserSQLHelper.COLUMN_HEIGHT,user.getHeight());
+        values.put(UserSQLHelper.COLUMN_BMI,user.getBmi());
+        values.put(UserSQLHelper.COLUMN_CATEGORY,user.getCategory());
+        values.put(UserSQLHelper.COLUMN_BFP,user.getBfp());
 
         long insertId = database.insert(UserSQLHelper.TABLE_USERS, null, values);
         Cursor cursor = database.query(UserSQLHelper.TABLE_USERS, allColumns, UserSQLHelper.COLUMN_USERID + " = " + insertId, null, null, null, null);
@@ -52,15 +49,16 @@ public class UserDataSource {
         cursor.close();
         return newUser;
     }
-    public void updateUser(int userID, String name, int age, int weight, int height, String gender){
+
+    public void updateUser(User user){
         ContentValues dataToInsert = new ContentValues();
-        dataToInsert.put("name", name);
-        dataToInsert.put("age", age);
-        dataToInsert.put("weight", weight);
-        dataToInsert.put("height", height);
-        dataToInsert.put("gender", gender);
+        dataToInsert.put("name", user.getName());
+        dataToInsert.put("age", user.getAge());
+        dataToInsert.put("weight", user.getWeight());
+        dataToInsert.put("height", user.getHeight());
+        dataToInsert.put("gender", user.getGender());
         String where = "userid=?";
-        String[] whereArgs = new String[] {String.valueOf(userID)};
+        String[] whereArgs = new String[] {String.valueOf(user.getUserid())};
         try{
             database.update(UserSQLHelper.TABLE_USERS, dataToInsert,where, whereArgs);
         }
@@ -103,14 +101,5 @@ public class UserDataSource {
         User.setBfp(cursor.getDouble(7));
         return User;
     }
-    public static User getCurrentUser() {
-        return currentUser;
-    }
-
-    public static void setCurrentUser(User currentUser) {
-        UserDataSource.currentUser = currentUser;
-    }
-
-
 
 }
