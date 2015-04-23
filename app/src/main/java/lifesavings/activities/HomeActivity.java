@@ -16,6 +16,7 @@ import android.widget.TimePicker;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import lifesavings.db.ExerciseDataSource;
 import lifesavings.db.User;
@@ -24,7 +25,8 @@ import lifesavings.view.SlidingTabLayout;
 
 public class HomeActivity extends ActionBarActivity implements ProfileSavingsFragment.OnFragmentInteractionListener,
                                                                ExerciseEditFragment.OnFragmentInteractionListener,
-                                                               ExerciseRecordFragment.OnFragmentInteractionListener{
+                                                               ExerciseRecordFragment.OnFragmentInteractionListener,
+                                                               ExerciseHistoryFragment.OnFragmentInteractionListener{
 
     private SlidingTabLayout slidingTabLayout;
     private ViewPager viewPager;
@@ -49,6 +51,7 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
         fragments.add(new ExerciseEditFragment());
         fragments.add(new ExerciseRecordFragment());
         fragments.add(new ProfileSavingsFragment());
+        fragments.add(ExerciseHistoryFragment.newInstance(currentUser));
 
         // use FragmentPagerAdapter to bind the slidingTabLayout (tabs with different titles)
         // and ViewPager (different pages of fragment) together.
@@ -121,20 +124,32 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
 
         StringBuilder date_time = new StringBuilder();
 
-        date_time.append(dp.getDayOfMonth());
-        date_time.append(dp.getMonth());
-        date_time.append(dp.getYear());
-        date_time.append(tp.getCurrentHour());
+
+        date_time.append(dp.getMonth() + "/");
+        date_time.append(dp.getDayOfMonth() + "/");
+        date_time.append(dp.getYear() + " ");
+        date_time.append(tp.getCurrentHour() + ":");
         date_time.append(tp.getCurrentMinute());
 
-        long dt = Long.parseLong(date_time.toString().trim());
+        String dt = date_time.toString();
         double duration = Double.parseDouble(et.getText().toString());
         String exercise = spinner.getSelectedItem().toString();
 
         ExerciseDataSource dataSource = new ExerciseDataSource(this);
         dataSource.open();
-        dataSource.createExcercise(101101,dt,duration,exercise);
+        dataSource.createExcercise(currentUser.getUserid(),dt,duration,exercise);
         dataSource.close();
+    }
+
+    public List<ExerciseDataSource.Exercise> grabUserExercises(int user_id)throws SQLException{
+        List<ExerciseDataSource.Exercise> exercise;
+
+        ExerciseDataSource dataSource = new ExerciseDataSource(this);
+        dataSource.open();
+        exercise = dataSource.getAllExcercises(user_id);
+        dataSource.close();
+
+        return exercise;
     }
 
     //<editor-fold desc="Implementing Interfaces">
@@ -148,6 +163,9 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
     }
     public void onFragmentInteractionRecord(Uri uri)
     {
+
+    }
+    public void onFragmentInteractionUser(String str){
 
     }
     //</editor-fold>

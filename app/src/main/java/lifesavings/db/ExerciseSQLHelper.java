@@ -26,7 +26,7 @@ public class ExerciseSQLHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TABLE_EXCERCISE
                     + " (" + COLUMN_ID + "INTEGER PRIMARY KEY, "
                     + COLUMN_USERID + " INTEGER NOT NULL,"
-                    + COLUMN_TIME + " INTEGER NOT NULL,"
+                    + COLUMN_TIME + " TEXT NOT NULL,"
                     + COLUMN_DURATION + " INTEGER NOT NULL, "
                     + COLUMN_EXCERCISE + " TEXT NOT NULL);";
 

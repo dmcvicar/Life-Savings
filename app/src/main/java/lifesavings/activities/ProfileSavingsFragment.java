@@ -13,8 +13,6 @@ import android.widget.TextView;
 
 import java.sql.SQLException;
 import java.util.List;
-
-import lifesavings.db.Exercise;
 import lifesavings.db.ExerciseDataSource;
 import lifesavings.db.Money;
 import lifesavings.db.MoneyDataSource;
@@ -94,7 +92,7 @@ public class ProfileSavingsFragment extends Fragment {
             e.printStackTrace();
         }
 
-        List<Exercise> exercises = exerciseConnect.getAllExcercises();
+        List<ExerciseDataSource.Exercise> exercises = exerciseConnect.getAllExcercises();
         List<Money> moneys = moneyConnect.getAllMoneys();
 
         //construct exercise strings
@@ -103,7 +101,7 @@ public class ProfileSavingsFragment extends Fragment {
 
         for (int i = 0; i < valuesEx.length; i++) {
             for (int j = 0; j < moneys.size(); j++) {
-                Exercise cur = exercises.get(i);
+                ExerciseDataSource.Exercise cur = exercises.get(i);
                 double cash = 0;
                 if (cur.getExcercise().equals(moneys.get(j).getExcercise())) {
                     valuesEx[i + 1] = cur.getTime() + "\t" + cur.getExcercise() + "\t" + cur.getDuration();

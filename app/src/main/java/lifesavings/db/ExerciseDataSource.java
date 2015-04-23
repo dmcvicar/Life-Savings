@@ -30,7 +30,7 @@ public class ExerciseDataSource {
         helper.close();
     }
 
-    public Exercise createExcercise(int userid, long time, double duration, String excercise) {
+    public Exercise createExcercise(int userid, String time, double duration, String excercise) {
         ContentValues values = new ContentValues();
         values.put(ExerciseSQLHelper.COLUMN_USERID, userid);
         values.put(ExerciseSQLHelper.COLUMN_TIME,time);
@@ -68,14 +68,93 @@ public class ExerciseDataSource {
         return exercises;
     }
 
+    public List<Exercise> getAllExcercises(int user_id) {
+        List<Exercise> exercises = new ArrayList<Exercise>();
+
+        Cursor cursor = database.query(ExerciseSQLHelper.TABLE_EXCERCISE,
+                allColumns, ""+ ExerciseSQLHelper.COLUMN_USERID + " = " + user_id, null, null, null, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Exercise Exercise = cursorToExcercise(cursor);
+            exercises.add(Exercise);
+            cursor.moveToNext();
+        }
+        // make sure to close the cursor
+        cursor.close();
+        return exercises;
+    }
+
     private Exercise cursorToExcercise(Cursor cursor) {
         Exercise Exercise = new Exercise();
         Exercise.setId(cursor.getInt(0));
         Exercise.setUserid(cursor.getInt(1));
-        Exercise.setTime(cursor.getLong(2));
+        Exercise.setTime(cursor.getString(2));
         Exercise.setDuration(cursor.getDouble(3));
         Exercise.setExcercise(cursor.getString(4));
         return Exercise;
     }
 
+
+    public static class Exercise{
+        private int id;
+        private int userid;
+        private String time;
+        private double duration;
+        private String exercise;
+
+        public Exercise() {
+
+        }
+
+        public Exercise(int rowid, int userid, String time, double duration, String excercise) {
+            this.id = rowid;
+            this.userid = userid;
+            this.time = time;
+            this.duration = duration;
+            this.exercise = excercise;
+        }
+
+
+
+        public String getExcercise() {
+            return exercise;
+        }
+
+        public void setExcercise(String excercise) {
+            this.exercise = excercise;
+        }
+
+        public double getDuration() {
+            return duration;
+        }
+
+        public void setDuration(double duration) {
+            this.duration = duration;
+        }
+
+        public String getTime() {
+            return time;
+        }
+
+        public void setTime(String time) {
+            this.time = time;
+        }
+
+        public int getUserid() {
+            return userid;
+        }
+
+        public void setUserid(int userid) {
+            this.userid = userid;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int rowid) {
+            this.id = rowid;
+        }
+    }
 }
