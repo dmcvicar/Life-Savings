@@ -36,6 +36,7 @@
     <string name="duration_text">Set Duration</string>
     <string name="sel_exercise">Select Exercise</string>
     <string name="submit">Submit</string>
+    <string name="exit_app">Exit</string>
 
     <string-array name="exercises">
         <item>Walking</item>

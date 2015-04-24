@@ -91,6 +91,11 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
             startActivity(intent);
             return true;
         }
+        else if (id == R.id.sign_out) {
+            Intent intent = new Intent(this, SelectUserActivity.class);
+            startActivity(intent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

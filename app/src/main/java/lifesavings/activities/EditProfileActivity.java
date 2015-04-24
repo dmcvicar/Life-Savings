@@ -73,7 +73,7 @@ public class EditProfileActivity extends ActionBarActivity {
             intent.putStringArrayListExtra("USER",currentUser.toArrayList());
         }else{
             currentUser = getUserFromInput(-1);
-            oldDB.createUser(currentUser);
+            currentUser = oldDB.createUser(currentUser);
             intent.putStringArrayListExtra("USER",currentUser.toArrayList());
         }
         startActivity(intent);
