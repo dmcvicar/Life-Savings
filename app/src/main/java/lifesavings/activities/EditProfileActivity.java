@@ -24,6 +24,7 @@ public class EditProfileActivity extends ActionBarActivity {
     private EditText userWeight;
     private EditText userHeight;
     private UserDataSource oldDB;
+    private User primary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class EditProfileActivity extends ActionBarActivity {
         userWeight = (EditText) findViewById(R.id.weight_edit_text);
 
         if(getIntent().hasExtra("USER")) {
-            User primary =  User.fromArrayList(getIntent().getStringArrayListExtra("USER"));
+            primary =  User.fromArrayList(getIntent().getStringArrayListExtra("USER"));
             userName.setText(primary.getName());
             userAge.setText("" + primary.getAge());
             if (primary.getGender().equalsIgnoreCase("male")) {
@@ -106,6 +107,7 @@ public class EditProfileActivity extends ActionBarActivity {
         }*/
         if (id == R.id.home) {
             Intent intent = new Intent(this, HomeActivity.class);
+            intent.putStringArrayListExtra("USER",primary.toArrayList());
             startActivity(intent);
             return true;
         }
