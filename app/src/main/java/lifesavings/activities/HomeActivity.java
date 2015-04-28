@@ -1,11 +1,16 @@
 package lifesavings.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +18,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,23 +32,46 @@ import lifesavings.view.SlidingTabLayout;
 public class HomeActivity extends ActionBarActivity implements ProfileSavingsFragment.OnFragmentInteractionListener,
                                                                ExerciseEditFragment.OnFragmentInteractionListener,
                                                                ExerciseRecordFragment.OnFragmentInteractionListener,
-                                                               ExerciseHistoryFragment.OnFragmentInteractionListener{
+                                                               ExerciseHistoryFragment.OnFragmentInteractionListener,
+                                                               SensorEventListener {
 
     private SlidingTabLayout slidingTabLayout;
     private ViewPager viewPager;
     private ArrayList<Fragment> fragments;
     private LifeSavingsTabsViewPagerAdapter myViewPageAdapter;
     private User currentUser;
+    private SensorManager sensorManager;
+    private int stepCount;
+    private int lastCountSubmitted; //last step Count submitted to the database
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Sensor stepCounter;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        stepCount = 0;
+        lastCountSubmitted = 0;
 
         currentUser = User.fromArrayList(getIntent().getStringArrayListExtra("USER"));
         setTitle("User: " + currentUser.getName());
 
+        //set sensorManager
+        this.sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
+        stepCounter = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+
+        if (stepCounter != null)
+        {
+            sensorManager.registerListener(this, stepCounter, SensorManager.SENSOR_DELAY_UI);
+        }
+        else
+        {
+            Toast.makeText(this, "Count sensor not available!", Toast.LENGTH_LONG).show();
+        }
+
+            //setup sliding tab
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.tab);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
 
@@ -125,6 +154,7 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
         DatePicker dp = (DatePicker) findViewById(R.id.datePicker);
         EditText et = (EditText) findViewById(R.id.duration);
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        double duration;
 
 
         StringBuilder date_time = new StringBuilder();
@@ -137,8 +167,15 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
         date_time.append(tp.getCurrentMinute());
 
         String dt = date_time.toString();
-        double duration = Double.parseDouble(et.getText().toString());
         String exercise = spinner.getSelectedItem().toString();
+        if(useStep(exercise) == 1)
+        {
+            duration = stepCount - lastCountSubmitted;
+            lastCountSubmitted = stepCount;
+        }
+        else {
+            duration = Double.parseDouble(et.getText().toString());
+        }
 
         ExerciseDataSource dataSource = new ExerciseDataSource(this);
         dataSource.open();
@@ -174,4 +211,42 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
 
     }
     //</editor-fold>
+
+    //Exercise Handler
+    //Returns
+    private int useStep(String exercise){
+        if(exercise.equalsIgnoreCase("walking")){
+            return 1;
+        }
+        else if(exercise.equalsIgnoreCase("running")){
+            return 1;
+        }
+        else if(exercise.equalsIgnoreCase("jogging")){
+            return 1;
+        }
+        else if(exercise.equalsIgnoreCase("rowing")){
+            return 0;
+        }
+        else if(exercise.equalsIgnoreCase("swimming")){
+            return 0;
+        }
+        else if(exercise.equalsIgnoreCase("hiking")){
+            return 0;
+        }
+        else if(exercise.equalsIgnoreCase("biking")){
+            return 0;
+        }
+
+        return 0;
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        stepCount = (int) event.values[0];
+    }
+
+
+        @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
 }
