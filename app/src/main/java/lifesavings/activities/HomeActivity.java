@@ -1,8 +1,6 @@
 package lifesavings.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -175,6 +173,5 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
     public void onFragmentInteractionUser(String str){
 
     }
-
     //</editor-fold>
 }
