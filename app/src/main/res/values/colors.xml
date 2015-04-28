@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="tab_color" >#2ecc71</color>
-    <color name="indicator_color"></color>
 </resources>

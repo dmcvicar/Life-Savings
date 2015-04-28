@@ -16,7 +16,7 @@ public class ExerciseDataSource {
 
     private SQLiteDatabase database;
     private ExerciseSQLHelper helper;
-    private String[] allColumns = { ExerciseSQLHelper.COLUMN_ID, ExerciseSQLHelper.COLUMN_USERID, ExerciseSQLHelper.COLUMN_TIME, ExerciseSQLHelper.COLUMN_DURATION, ExerciseSQLHelper.COLUMN_EXCERCISE};
+    private String[] allColumns = { ExerciseSQLHelper.COLUMN_ID, ExerciseSQLHelper.COLUMN_USERID, ExerciseSQLHelper.COLUMN_TIME, ExerciseSQLHelper.COLUMN_DURATION, ExerciseSQLHelper.COLUMN_EXCERCISE, ExerciseSQLHelper.COLUMN_EXERTION};
 
     public ExerciseDataSource(Context context) {
         helper = new ExerciseSQLHelper(context);
@@ -30,12 +30,13 @@ public class ExerciseDataSource {
         helper.close();
     }
 
-    public Exercise createExcercise(int userid, String time, double duration, String excercise) {
+    public Exercise createExcercise(int userid, String time, double duration, String excercise, int exertion) {
         ContentValues values = new ContentValues();
         values.put(ExerciseSQLHelper.COLUMN_USERID, userid);
         values.put(ExerciseSQLHelper.COLUMN_TIME,time);
         values.put(ExerciseSQLHelper.COLUMN_DURATION,duration);
         values.put(ExerciseSQLHelper.COLUMN_EXCERCISE,excercise);
+        values.put(ExerciseSQLHelper.COLUMN_EXERTION,exertion);
 
         long insertId = database.insert(ExerciseSQLHelper.TABLE_EXCERCISE, null, values);
         Cursor cursor = database.query(ExerciseSQLHelper.TABLE_EXCERCISE, allColumns, ExerciseSQLHelper.COLUMN_ID + " = " + insertId, null, null, null, null);
@@ -92,6 +93,7 @@ public class ExerciseDataSource {
         Exercise.setTime(cursor.getString(2));
         Exercise.setDuration(cursor.getDouble(3));
         Exercise.setExcercise(cursor.getString(4));
+        Exercise.setExertion(cursor.getInt(5));
         return Exercise;
     }
 
@@ -102,20 +104,26 @@ public class ExerciseDataSource {
         private String time;
         private double duration;
         private String exercise;
+        private int exertion;
 
         public Exercise() {
 
         }
 
-        public Exercise(int rowid, int userid, String time, double duration, String excercise) {
+        public Exercise(int rowid, int userid, String time, double duration, String excercise, int exertion) {
             this.id = rowid;
             this.userid = userid;
             this.time = time;
             this.duration = duration;
             this.exercise = excercise;
+            this.exertion = exertion;
         }
 
 
+
+        public int getExertion() {return this.exertion;}
+
+        public void setExertion(int exertion){this.exertion = exertion;}
 
         public String getExcercise() {
             return exercise;

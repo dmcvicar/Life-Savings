@@ -1,10 +1,72 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="lifesavings.activities.ExerciseRecordFragment">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="lifesavings.activities.ExerciseRecordFragment"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent">
 
-    <!-- TODO: remove this text view when functional -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/record_exercise" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/abc_text_size_body_2_material"
+            android:text="@string/steps"
+            android:layout_gravity="center_horizontal"
+            android:textSize="28sp" />
+
+        <TextView
+            android:id="@+id/step_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/abc_text_size_body_2_material"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            />
+
+        <Button android:id="@+id/Record"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/abc_text_size_body_2_material"
+            android:layout_marginStart="@dimen/abc_text_size_body_2_material"
+            android:layout_marginRight="@dimen/abc_text_size_body_2_material"
+            android:layout_marginEnd="@dimen/abc_text_size_body_2_material"
+            android:layout_marginTop="@dimen/abc_text_size_body_2_material"
+            android:layout_marginBottom="@dimen/abc_text_size_body_2_material"
+            android:text="@string/record_exercise"
+            android:onClick="onStartRecord"
+            />
+        <Button android:id="@+id/Pause"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/abc_text_size_body_2_material"
+            android:layout_marginStart="@dimen/abc_text_size_body_2_material"
+            android:layout_marginRight="@dimen/abc_text_size_body_2_material"
+            android:layout_marginEnd="@dimen/abc_text_size_body_2_material"
+            android:layout_marginTop="@dimen/abc_text_size_body_2_material"
+            android:layout_marginBottom="@dimen/abc_text_size_body_2_material"
+            android:text="@string/pause_exercise"
+            android:onClick="onPauseRecord"
+            android:visibility="gone"
+            />
+        <Button android:id="@+id/Stop"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/abc_text_size_body_2_material"
+            android:layout_marginStart="@dimen/abc_text_size_body_2_material"
+            android:layout_marginRight="@dimen/abc_text_size_body_2_material"
+            android:layout_marginEnd="@dimen/abc_text_size_body_2_material"
+            android:layout_marginTop="@dimen/abc_text_size_body_2_material"
+            android:layout_marginBottom="@dimen/abc_text_size_body_2_material"
+            android:text="@string/stop_exercise"
+            android:onClick="onStopRecord"
+            android:visibility="gone"
+            />
+
+    </LinearLayout>
+
+</ScrollView>

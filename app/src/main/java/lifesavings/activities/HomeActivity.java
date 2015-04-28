@@ -11,12 +11,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -43,33 +46,23 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
     private SensorManager sensorManager;
     private int stepCount;
     private int lastCountSubmitted; //last step Count submitted to the database
+    private int totalStepCount; //total steps taken since last reboot.
+    private Sensor stepCounter;
+    private boolean isPaused;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Sensor stepCounter;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        stepCount = 0;
-        lastCountSubmitted = 0;
-
-        currentUser = User.fromArrayList(getIntent().getStringArrayListExtra("USER"));
-        setTitle("User: " + currentUser.getName());
-
-        //set sensorManager
         this.sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
         stepCounter = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+        isPaused = false;
 
-        if (stepCounter != null)
-        {
-            sensorManager.registerListener(this, stepCounter, SensorManager.SENSOR_DELAY_UI);
-        }
-        else
-        {
-            Toast.makeText(this, "Count sensor not available!", Toast.LENGTH_LONG).show();
-        }
+        currentUser = User.fromArrayList(getIntent().getStringArrayListExtra("USER"));
+        setTitle("User: " + currentUser.getName());
 
             //setup sliding tab
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.tab);
@@ -129,7 +122,95 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
         return super.onOptionsItemSelected(item);
     }
 
+    public void onStartRecord(View view){
+        stepCount = 0;
 
+        TextView stepView = (TextView) findViewById(R.id.step_count);
+        stepView.setText(Integer.toString(stepCount));
+        setRecordButtons(1);
+        //set sensorManager
+
+        if (stepCounter != null)
+        {
+            sensorManager.registerListener(this, stepCounter, SensorManager.SENSOR_DELAY_UI);
+
+        }
+        else
+        {
+            Toast.makeText(this, "Count sensor not available!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void onPauseRecord(View view){
+        if(isPaused) {
+            isPaused = false;
+            setRecordButtons(3);
+        }
+        else {
+            isPaused = true;
+            setRecordButtons(2);
+        }
+
+    }
+
+    public void onStopRecord(View view)throws SQLException{
+        sensorManager.unregisterListener(this, stepCounter);
+        setRecordButtons(4);
+
+        TimePicker tp = (TimePicker) findViewById(R.id.timePicker);
+        DatePicker dp = (DatePicker) findViewById(R.id.datePicker);
+
+
+        StringBuilder date_time = new StringBuilder();
+
+
+        date_time.append(dp.getMonth() + "/");
+        date_time.append(dp.getDayOfMonth() + "/");
+        date_time.append(dp.getYear() + " ");
+        date_time.append(tp.getCurrentHour() + ":");
+        date_time.append(tp.getCurrentMinute());
+
+        String dt = date_time.toString();
+
+        ExerciseDataSource dataSource = new ExerciseDataSource(this);
+        dataSource.open();
+        dataSource.createExcercise(currentUser.getUserid(),dt,-1,"TODO: Implement Accelerometer",stepCount);
+        dataSource.close();
+
+        Toast.makeText(this, "Exercise Recorded", Toast.LENGTH_LONG).show();
+
+    }
+
+
+    private void setRecordButtons(int option)
+    {
+        Button record= (Button) findViewById(R.id.Record);
+        Button pause= (Button) findViewById(R.id.Pause);
+        Button stop= (Button) findViewById(R.id.Stop);
+
+        switch(option){
+            case 1:
+                record.setVisibility(View.GONE);
+                pause.setVisibility(View.VISIBLE);
+                stop.setVisibility(View.VISIBLE);
+                break;
+            case 2:
+                record.setVisibility(View.GONE);
+                pause.setText(R.string.resume);
+                stop.setVisibility(View.GONE);
+                break;
+            case 3:
+                record.setVisibility(View.GONE);
+                pause.setText(R.string.pause_exercise);
+                stop.setVisibility(View.VISIBLE);
+                break;
+            case 4:
+                record.setVisibility(View.VISIBLE);
+                pause.setVisibility(View.GONE);
+                stop.setVisibility(View.GONE);
+                break;
+        }
+    }
     //Fragment UI listeners below
 
     public void onSetTime(View view){
@@ -152,9 +233,11 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
     public void onSubmitEdit(View view) throws SQLException {
         TimePicker tp = (TimePicker) findViewById(R.id.timePicker);
         DatePicker dp = (DatePicker) findViewById(R.id.datePicker);
-        EditText et = (EditText) findViewById(R.id.duration);
+        EditText sel_duration = (EditText) findViewById(R.id.duration);
+        EditText sel_exertion=(EditText) findViewById(R.id.exertion);
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         double duration;
+        int exertion;
 
 
         StringBuilder date_time = new StringBuilder();
@@ -168,19 +251,17 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
 
         String dt = date_time.toString();
         String exercise = spinner.getSelectedItem().toString();
-        if(useStep(exercise) == 1)
-        {
-            duration = stepCount - lastCountSubmitted;
-            lastCountSubmitted = stepCount;
-        }
-        else {
-            duration = Double.parseDouble(et.getText().toString());
-        }
+
+        duration = Double.parseDouble(sel_duration.getText().toString());
+        exertion = Integer.parseInt(sel_exertion.getText().toString());
 
         ExerciseDataSource dataSource = new ExerciseDataSource(this);
         dataSource.open();
-        dataSource.createExcercise(currentUser.getUserid(),dt,duration,exercise);
+        dataSource.createExcercise(currentUser.getUserid(),dt,duration,exercise,exertion);
         dataSource.close();
+
+
+        Toast.makeText(this, "Exercise Saved", Toast.LENGTH_LONG).show();
     }
 
     public List<ExerciseDataSource.Exercise> grabUserExercises(int user_id)throws SQLException{
@@ -242,11 +323,17 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        stepCount = (int) event.values[0];
+        if(!isPaused) {
+            TextView stepView = (TextView) findViewById(R.id.step_count);
+            stepView.setText(Integer.toString(++stepCount));
+        }
     }
 
 
         @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
+
+
+
 }

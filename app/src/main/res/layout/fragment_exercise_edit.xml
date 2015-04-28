@@ -13,6 +13,10 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/abc_text_size_body_1_material"
+            android:layout_marginStart="@dimen/abc_text_size_body_1_material"
+            android:layout_marginTop="@dimen/abc_text_size_body_2_material"
+            android:layout_marginBottom="@dimen/abc_text_size_body_2_material"
             android:textSize="@dimen/abc_text_size_medium_material"
             android:text="@string/edit_exercise"/>
 
@@ -23,12 +27,21 @@
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/abc_text_size_body_2_material"
+                android:layout_marginStart="@dimen/abc_text_size_body_2_material"
+                android:layout_marginRight="@dimen/abc_text_size_body_2_material"
+                android:layout_marginEnd="@dimen/abc_text_size_body_2_material"
                 android:text="@string/time_text"
                 android:onClick="onSetTime"/>
 
             <TimePicker
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/abc_text_size_body_2_material"
+                android:layout_marginStart="@dimen/abc_text_size_body_2_material"
+                android:layout_marginRight="@dimen/abc_text_size_body_2_material"
+                android:layout_marginEnd="@dimen/abc_text_size_body_2_material"
+                android:layout_marginBottom="@dimen/abc_text_size_body_2_material"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/timePicker"
                 android:visibility="gone"/>
@@ -41,17 +54,50 @@
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/abc_text_size_body_2_material"
+                android:layout_marginStart="@dimen/abc_text_size_body_2_material"
+                android:layout_marginRight="@dimen/abc_text_size_body_2_material"
+                android:layout_marginEnd="@dimen/abc_text_size_body_2_material"
                 android:text="@string/date_text"
                 android:onClick="onSetDate"/>
 
             <DatePicker
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/abc_text_size_body_2_material"
+                android:layout_marginStart="@dimen/abc_text_size_body_2_material"
+                android:layout_marginRight="@dimen/abc_text_size_body_2_material"
+                android:layout_marginEnd="@dimen/abc_text_size_body_2_material"
+                android:layout_marginBottom="@dimen/abc_text_size_body_2_material"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/datePicker"
                 android:visibility="gone" />
         </LinearLayout>
 
+
+        <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/abc_text_size_body_2_material"
+            android:layout_marginStart="@dimen/abc_text_size_body_2_material"
+            android:text="@string/duration_text"/>
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/abc_text_size_body_2_material"
+            android:layout_marginStart="@dimen/abc_text_size_body_2_material"
+            android:layout_marginRight="@dimen/abc_text_size_body_2_material"
+            android:layout_marginEnd="@dimen/abc_text_size_body_2_material"
+            android:layout_marginTop="@dimen/abc_text_size_body_2_material"
+            android:layout_marginBottom="@dimen/abc_text_size_body_2_material"
+            android:inputType="numberDecimal"
+            android:id="@+id/duration"/>
+
+    </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -60,22 +106,47 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/duration_text"/>
+                android:layout_marginLeft="@dimen/abc_text_size_body_2_material"
+                android:layout_marginStart="@dimen/abc_text_size_body_2_material"
+                android:text="@string/exertion_text"/>
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:id="@+id/duration"/>
+                android:layout_marginLeft="@dimen/abc_text_size_body_2_material"
+                android:layout_marginStart="@dimen/abc_text_size_body_2_material"
+                android:layout_marginRight="@dimen/abc_text_size_body_2_material"
+                android:layout_marginEnd="@dimen/abc_text_size_body_2_material"
+                android:layout_marginTop="@dimen/abc_text_size_body_2_material"
+                android:layout_marginBottom="@dimen/abc_text_size_body_2_material"
+                android:inputType="number"
+                android:id="@+id/exertion"/>
 
         </LinearLayout>
 
-        <Spinner
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinner"
-            android:entries="@array/exercises"
-            android:prompt="@string/sel_exercise"/>
+        <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/abc_text_size_body_2_material"
+                android:layout_marginStart="@dimen/abc_text_size_body_2_material"
+                android:text="@string/sel_exercise"/>
 
+            <Spinner
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/abc_text_size_body_2_material"
+                android:layout_marginStart="@dimen/abc_text_size_body_2_material"
+                android:layout_marginRight="@dimen/abc_text_size_body_2_material"
+                android:layout_marginEnd="@dimen/abc_text_size_body_2_material"
+                android:layout_marginTop="@dimen/abc_text_size_body_2_material"
+                android:layout_marginBottom="@dimen/abc_text_size_body_2_material"
+                android:id="@+id/spinner"
+                android:entries="@array/exercises"
+                android:prompt="@string/sel_exercise"/>
+        </LinearLayout>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

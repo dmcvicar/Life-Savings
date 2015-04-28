@@ -6,6 +6,12 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/abc_text_size_body_2_material"
+        android:layout_marginStart="@dimen/abc_text_size_body_2_material"
+        android:layout_marginRight="@dimen/abc_text_size_body_2_material"
+        android:layout_marginEnd="@dimen/abc_text_size_body_2_material"
+        android:layout_marginTop="@dimen/abc_text_size_body_2_material"
+        android:layout_marginBottom="@dimen/abc_text_size_body_2_material"
         android:id="@+id/create_user_button"
         android:onClick="onCreateUser"
         android:text="@string/new_user"/>

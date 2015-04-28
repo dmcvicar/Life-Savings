@@ -5,7 +5,7 @@
     <string name="edit_exercise">Enter Your Exercise Information</string>
     <string name="savings_profile">Your Savings Profile</string>
     <string name="edit_profile">Edit Profile</string>
-    <string name="record_exercise">Record Exercise</string>
+    <string name="record_exercise">Record</string>
     <string name="sign_out">Sign Out</string>
     <string name="settings">Settings</string>
     <string name="action_settings">Settings</string>
@@ -37,6 +37,13 @@
     <string name="sel_exercise">Select Exercise</string>
     <string name="submit">Submit</string>
     <string name="exit_app">Exit</string>
+    <string name="pause_exercise">Pause</string>
+    <string name="stop_exercise">Stop</string>
+    <string name="steps">Steps</string>
+    <string name="resume">Resume</string>
+    <string name="exertion_text">Exertion Level</string>
+    <string name="enter_height">Enter your height (in inches)</string>
+    <string name="enter_weight">Enter weight (in pounds)</string>
 
     <string-array name="exercises">
         <item>Walking</item>

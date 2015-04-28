@@ -17,6 +17,7 @@ public class ExerciseSQLHelper extends SQLiteOpenHelper {
     public static final String COLUMN_TIME = "time";
     public static final String COLUMN_DURATION = "duration";
     public static final String COLUMN_EXCERCISE = "excercise";
+    public static final String COLUMN_EXERTION = "exertion";
 
 
     private static final String DATABASE_NAME = "exercise.db";
@@ -28,7 +29,8 @@ public class ExerciseSQLHelper extends SQLiteOpenHelper {
                     + COLUMN_USERID + " INTEGER NOT NULL,"
                     + COLUMN_TIME + " TEXT NOT NULL,"
                     + COLUMN_DURATION + " INTEGER NOT NULL, "
-                    + COLUMN_EXCERCISE + " TEXT NOT NULL);";
+                    + COLUMN_EXCERCISE + " TEXT NOT NULL,"
+                    + COLUMN_EXERTION + " INTEGER NOT NULL);";
 
     public ExerciseSQLHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

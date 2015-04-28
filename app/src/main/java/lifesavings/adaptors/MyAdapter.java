@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import lifesavings.activities.R;
@@ -36,10 +38,12 @@ public class MyAdapter extends ArrayAdapter<ExerciseDataSource.Exercise> {
         TextView timeView = (TextView) exerciseView.findViewById(R.id.ex_time);
         TextView typeView = (TextView) exerciseView.findViewById(R.id.ex_type);
         TextView durView = (TextView) exerciseView.findViewById(R.id.ex_duration);
+        TextView exertView = (TextView) exerciseView.findViewById(R.id.ex_exertion);
 
         timeView.setText(exerciseList.get(position).getTime());
         typeView.append(exerciseList.get(position).getExcercise());
         durView.append(Double.toString(exerciseList.get(position).getDuration()));
+        exertView.append(Integer.toString(exerciseList.get(position).getExertion()));
 
         return exerciseView;
     }
