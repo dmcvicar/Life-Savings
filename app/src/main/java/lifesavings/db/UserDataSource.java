@@ -17,7 +17,7 @@ public class UserDataSource {
     private static int autoId;
     private SQLiteDatabase database;
     private UserSQLHelper helper;
-    private String[] allColumns = { UserSQLHelper.COLUMN_USERID, UserSQLHelper.COLUMN_NAME, UserSQLHelper.COLUMN_GENDER, UserSQLHelper.COLUMN_WEIGHT, UserSQLHelper.COLUMN_HEIGHT, UserSQLHelper.COLUMN_BMI, UserSQLHelper.COLUMN_CATEGORY, UserSQLHelper.COLUMN_BFP};
+    private String[] allColumns = { UserSQLHelper.COLUMN_USERID, UserSQLHelper.COLUMN_NAME, UserSQLHelper.COLUMN_GENDER, UserSQLHelper.COLUMN_WEIGHT, UserSQLHelper.COLUMN_HEIGHT, UserSQLHelper.COLUMN_BMI, UserSQLHelper.COLUMN_CATEGORY, UserSQLHelper.COLUMN_BFP, UserSQLHelper.COLUMN_ICON_PATH};
 
     public UserDataSource(Context context) {
         helper = new UserSQLHelper(context);
@@ -59,6 +59,7 @@ public class UserDataSource {
         dataToInsert.put("weight", user.getWeight());
         dataToInsert.put("height", user.getHeight());
         dataToInsert.put("gender", user.getGender());
+        dataToInsert.put("iconPath", user.getIconPath());
         String where = "userid=?";
         String[] whereArgs = new String[] {String.valueOf(user.getUserid())};
         try{
@@ -101,6 +102,7 @@ public class UserDataSource {
         User.setBmi(cursor.getInt(5));
         User.setCategory(cursor.getInt(6));
         User.setBfp(cursor.getDouble(7));
+        User.setIconPath(cursor.getString(8));
         return User;
     }
 
