@@ -44,6 +44,7 @@
     <string name="exertion_text">Exertion Level</string>
     <string name="enter_height">Enter your height (in inches)</string>
     <string name="enter_weight">Enter weight (in pounds)</string>
+    <string name="distance">Distance Traveled</string>
     <string name="take_picture">Take Picture</string>
 
     <string-array name="exercises">

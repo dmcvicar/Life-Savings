@@ -28,6 +28,24 @@
             android:textStyle="bold"
             />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/abc_text_size_body_2_material"
+            android:text="@string/distance"
+            android:layout_gravity="center_horizontal"
+            android:textSize="28sp" />
+
+        <TextView
+            android:id="@+id/distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/abc_text_size_body_2_material"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            />
+
         <Button android:id="@+id/Record"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
