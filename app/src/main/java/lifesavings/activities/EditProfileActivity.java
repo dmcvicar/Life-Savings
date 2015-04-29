@@ -1,6 +1,7 @@
 package lifesavings.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -34,6 +36,7 @@ public class EditProfileActivity extends ActionBarActivity {
     private UserDataSource oldDB;
     private User primary;
     private String photoPath;
+    private ImageView profileThumbNail;
 
     private static int userNum = 0;
 
@@ -160,6 +163,7 @@ public class EditProfileActivity extends ActionBarActivity {
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
                         Uri.fromFile(profilePic));
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                galleryAddPic();
             }
         }
     }
@@ -187,4 +191,14 @@ public class EditProfileActivity extends ActionBarActivity {
         mediaScanIntent.setData(contentUri);
         this.sendBroadcast(mediaScanIntent);
     }
-}
+
+    //Generate thumbnail the way google suggests on their doc pages
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            profileThumbNail.setImageBitmap(imageBitmap);
+        }
+    }
+
+    }
