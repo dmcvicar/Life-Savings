@@ -16,13 +16,14 @@ public class User implements Serializable{
     private double bmi;
     private int category;
     private int age;
-    double bfp;
+    private double bfp;
+    private String iconPath;
 
     public User() {
 
     }
 
-    public User(int userid, String name, String gender, int weight, int height, double bmi, int category, double bfp, int age) {
+    public User(int userid, String name, String gender, int weight, int height, double bmi, int category, double bfp, int age, String iconPath) {
         this.userid = userid;
         this.name = name;
         this.gender = gender;
@@ -32,8 +33,9 @@ public class User implements Serializable{
         this.category = category;
         this.bfp = bfp;
         this.age = age;
+        this.iconPath = iconPath;
     }
-    public User(int userid, String name, String gender, int weight, int height, double bmi, int category,int age) {
+    public User(int userid, String name, String gender, int weight, int height, double bmi, int category,int age, String iconPath) {
         this.userid = userid;
         this.name = name;
         this.gender = gender;
@@ -43,6 +45,7 @@ public class User implements Serializable{
         this.category = category;
         this.bfp = -1;
         this.age = age;
+        this.iconPath = iconPath;
     }
     public User(int userid, String name, String gender, int weight, int height, double bmi, int age) {
         this.userid = userid;
@@ -54,9 +57,10 @@ public class User implements Serializable{
         this.category = calcCategory(this.bmi);
         this.bfp = -1;
         this.age = age;
+        this.iconPath = iconPath;
     }
 
-    public User (int userid, String name, String gender, int weight, int height, int age){
+    public User (int userid, String name, String gender, int weight, int height, int age, String iconPath){
         this.userid = userid;
         this.name = name;
         this.gender = gender;
@@ -66,6 +70,7 @@ public class User implements Serializable{
         this.category = calcCategory(this.bmi);
         this.bfp = -1;
         this.age = age;
+        this.iconPath = iconPath;
     }
     public static double calcBMI(int weight, int height){
         // dw = double weight, dh = double height for accuracy reasons.
@@ -192,6 +197,15 @@ public class User implements Serializable{
         return name;
     }
 
+
+    public String getIconPath() {
+        return iconPath;
+    }
+
+    public void setIconPath(String iconPath) {
+        this.iconPath = iconPath;
+    }
+
     public ArrayList<String> toArrayList() {
         ArrayList<String> data = new ArrayList<String>();
         data.add(Integer.toString(userid));
@@ -203,6 +217,7 @@ public class User implements Serializable{
         data.add(Integer.toString(category));
         data.add(Double.toString(bfp));
         data.add(Integer.toString(age));
+        data.add(iconPath);
         return data;
     }
 
@@ -216,7 +231,8 @@ public class User implements Serializable{
                 Double.parseDouble(data.get(5)),
                 Integer.parseInt(data.get(6)),
                 Double.parseDouble(data.get(7)),
-                Integer.parseInt(data.get(8)));
+                Integer.parseInt(data.get(8)),
+                data.get(9));
         return out;
     }
 
