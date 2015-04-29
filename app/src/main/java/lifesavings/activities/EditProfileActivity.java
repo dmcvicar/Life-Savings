@@ -83,18 +83,26 @@ public class EditProfileActivity extends ActionBarActivity {
     }
 
     public void infoSave(View view){
-        User currentUser = new User();
-        Intent intent = new Intent(this,HomeActivity.class);
-        if(getIntent().hasExtra("USER")) {
-            currentUser = getUserFromInput(User.fromArrayList(getIntent().getStringArrayListExtra("USER")).getUserid());
-            oldDB.updateUser(currentUser);
-            intent.putStringArrayListExtra("USER",currentUser.toArrayList());
-        }else{
-            currentUser = getUserFromInput(-1);
-            currentUser = oldDB.createUser(currentUser);
-            intent.putStringArrayListExtra("USER",currentUser.toArrayList());
+
+        if(allFieldsNotNull()) {
+
+            User currentUser = new User();
+            Intent intent = new Intent(this, HomeActivity.class);
+            if (getIntent().hasExtra("USER")) {
+                currentUser = getUserFromInput(User.fromArrayList(getIntent().getStringArrayListExtra("USER")).getUserid());
+                oldDB.updateUser(currentUser);
+                intent.putStringArrayListExtra("USER", currentUser.toArrayList());
+            } else {
+                currentUser = getUserFromInput(-1);
+                currentUser = oldDB.createUser(currentUser);
+                intent.putStringArrayListExtra("USER", currentUser.toArrayList());
+            }
+            startActivity(intent);
+        } else {
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "Please fill in all input fields", Toast.LENGTH_SHORT);
+            toast.show();
         }
-        startActivity(intent);
     }
 
     public void infoCancel(View view){
@@ -202,6 +210,14 @@ public class EditProfileActivity extends ActionBarActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             profileThumbNail.setImageURI(Uri.parse(photoPath));
         }
+    }
+
+    private boolean allFieldsNotNull() {
+        return (!userName.getText().equals("") &&
+                !userAge.getText().equals("") &&
+                !userWeight.getText().equals("") &&
+                !userHeight.getText().equals("")
+        );
     }
 
     }
