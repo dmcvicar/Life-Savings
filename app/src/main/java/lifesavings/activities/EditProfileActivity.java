@@ -1,7 +1,9 @@
 package lifesavings.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -9,6 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.IOException;
 
 import lifesavings.db.User;
 import lifesavings.db.UserDataSource;
@@ -27,6 +33,9 @@ public class EditProfileActivity extends ActionBarActivity {
     private EditText userHeight;
     private UserDataSource oldDB;
     private User primary;
+    private String photoPath;
+
+    private static int userNum = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,10 +144,47 @@ public class EditProfileActivity extends ActionBarActivity {
     }
 
     //handle taking a picture
-    private void dispatchTakePictureIntent() {
+    private void takePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            File profilePic = null;
+            try{
+                profilePic = createImageFile();
+            }
+            catch (IOException e){
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "File Path not created successfully", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            if(profilePic != null){
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                        Uri.fromFile(profilePic));
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
         }
+    }
+    //handle writing a picture
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String imageName = "user_" + userNum;
+        File storageLoc = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageLoc      /* directory */
+        );
+        // Save the file
+        photoPath = "file:" + image.getAbsolutePath();
+        return image;
+    }
+
+    //add a picture to a gallery
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(photoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
     }
 }
