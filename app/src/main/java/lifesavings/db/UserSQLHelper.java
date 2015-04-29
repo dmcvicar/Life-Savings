@@ -21,6 +21,7 @@ public class UserSQLHelper extends SQLiteOpenHelper {
     public static final String COLUMN_BMI = "bmi";
     public static final String COLUMN_CATEGORY = "category";
     public static final String COLUMN_BFP = "bfp";
+    public static final String COLUMN_ICON_PATH = "icon_path";
 
 
 
@@ -37,7 +38,8 @@ public class UserSQLHelper extends SQLiteOpenHelper {
                     + COLUMN_HEIGHT + " REAL NOT NULL, "
                     + COLUMN_BMI + " REAL NOT NULL, "
                     + COLUMN_CATEGORY + " INTEGER NOT NULL, "
-                    + COLUMN_BFP + " REAL NOT NULL);";
+                    + COLUMN_BFP + " REAL NOT NULL, "
+                    + COLUMN_ICON_PATH + " REAL NOT NULL);";
 
     public UserSQLHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

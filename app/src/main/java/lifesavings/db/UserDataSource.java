@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.net.UnknownServiceException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,7 @@ public class UserDataSource {
         values.put(UserSQLHelper.COLUMN_BMI,user.getBmi());
         values.put(UserSQLHelper.COLUMN_CATEGORY,user.getCategory());
         values.put(UserSQLHelper.COLUMN_BFP,user.getBfp());
+        values.put(UserSQLHelper.COLUMN_ICON_PATH,user.getIconPath());
 
         long insertId = database.insert(UserSQLHelper.TABLE_USERS, null, values);
         Cursor cursor = database.query(UserSQLHelper.TABLE_USERS, allColumns, UserSQLHelper.COLUMN_USERID + " = " + insertId, null, null, null, null);

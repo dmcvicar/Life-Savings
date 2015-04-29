@@ -1,6 +1,5 @@
 package lifesavings.activities;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -12,7 +11,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +26,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import lifesavings.adaptors.LifeSavingsTabsViewPagerAdapter;
 import lifesavings.db.ExerciseDataSource;
 import lifesavings.db.User;
 import lifesavings.view.SlidingTabLayout;
