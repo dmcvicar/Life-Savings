@@ -7,12 +7,14 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,39 +39,43 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
                                                                ExerciseEditFragment.OnFragmentInteractionListener,
                                                                ExerciseRecordFragment.OnFragmentInteractionListener,
                                                                ExerciseHistoryFragment.OnFragmentInteractionListener,
-                                                               SensorEventListener {
-
+                                                               SensorEventListener,
+                                                               LocationListener{
+    //<editor-fold desc="Private Variables">
     private SlidingTabLayout slidingTabLayout;
     private ViewPager viewPager;
     private ArrayList<Fragment> fragments;
     private LifeSavingsTabsViewPagerAdapter myViewPageAdapter;
     private User currentUser;
     private SensorManager sensorManager;
+    private LocationManager locationManager;
+    private Location last;
+    private long distance_travelled;
     private int stepCount;
-    private int lastCountSubmitted; //last step Count submitted to the database
-    private int totalStepCount; //total steps taken since last reboot.
     private Sensor stepCounter;
     private boolean isPaused;
-
+    //</editor-fold>
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        //Set up Sensor and Location services.
         this.sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        this.locationManager =(LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        stepCounter = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+        //Setting inital values
         isPaused = false;
-
         currentUser = User.fromArrayList(getIntent().getStringArrayListExtra("USER"));
-        setTitle("User: " + currentUser.getName());
+        setTitle("Hello " + currentUser.getName());
+        stepCounter = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
 
-            //setup sliding tab
+        //Setup SlidingTabLayout
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.tab);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
 
-        // create a fragment list in order.
+        //Create a list to hold the fragments
         fragments = new ArrayList<>();
         fragments.add(new ExerciseEditFragment());
         fragments.add(new ExerciseRecordFragment());
@@ -84,45 +90,37 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
         // make sure the tabs are equally spaced.
         slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(viewPager);
+    }
 
+    //<editor-fold desc="Location Listeners">
+    @Override
+    public void onLocationChanged(Location location) {
+        Toast.makeText(this, "LOCATION CHANGED", Toast.LENGTH_SHORT).show();
+        if(last != null && !isPaused){
+            distance_travelled += location.distanceTo(last);
+            TextView stepView = (TextView) findViewById(R.id.distance);
+            stepView.setText(Float.toString(distance_travelled));
+        }
+        last = new Location(location);
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
 
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home, menu);
-        return true;
+    public void onProviderEnabled(String provider) {
+
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    public void onProviderDisabled(String provider) {
 
-        //noinspection SimplifiableIfStatement
-        /*if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-            return true;
-        }*/
-        if (id == R.id.edit_profile) {
-            Intent intent = new Intent(this, EditProfileActivity.class);
-            intent.putStringArrayListExtra("USER",currentUser.toArrayList());
-            startActivity(intent);
-            return true;
-        }
-        else if (id == R.id.sign_out) {
-            Intent intent = new Intent(this, SelectUserActivity.class);
-            startActivity(intent);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Record Exercise Button Listeners">
     public void onStartRecord(View view){
         stepCount = 0;
 
@@ -130,7 +128,6 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
         stepView.setText(Integer.toString(stepCount));
         setRecordButtons(1);
         //set sensorManager
-
         if (stepCounter != null)
         {
             sensorManager.registerListener(this, stepCounter, SensorManager.SENSOR_DELAY_UI);
@@ -140,22 +137,30 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
         {
             Toast.makeText(this, "Count sensor not available!", Toast.LENGTH_LONG).show();
         }
+
+        if(locationManager != null)
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,1,this);
+
+        Toast.makeText(this, "START!", Toast.LENGTH_LONG).show();
     }
 
     public void onPauseRecord(View view){
         if(isPaused) {
             isPaused = false;
             setRecordButtons(3);
+            Toast.makeText(this, "Resumed", Toast.LENGTH_LONG).show();
         }
         else {
             isPaused = true;
             setRecordButtons(2);
+            Toast.makeText(this, "Paused", Toast.LENGTH_LONG).show();
         }
 
     }
 
     public void onStopRecord(View view)throws SQLException{
         sensorManager.unregisterListener(this, stepCounter);
+        locationManager.removeUpdates(this);
         setRecordButtons(4);
 
         TimePicker tp = (TimePicker) findViewById(R.id.timePicker);
@@ -181,7 +186,9 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
             Toast.makeText(this, "Exercise Not Recorded, Try Again", Toast.LENGTH_LONG).show();
 
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Edit Exercise Button Listeners">
     public void onSubmitEdit(View view) throws SQLException {
         TimePicker tp = (TimePicker) findViewById(R.id.timePicker);
         DatePicker dp = (DatePicker) findViewById(R.id.datePicker);
@@ -231,19 +238,9 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
         else
             dp.setVisibility(View.VISIBLE);
     }
+    //</editor-fold>
 
-
-    public List<ExerciseDataSource.Exercise> grabUserExercises(int user_id)throws SQLException{
-        List<ExerciseDataSource.Exercise> exercise;
-
-        ExerciseDataSource dataSource = new ExerciseDataSource(this);
-        dataSource.open();
-        exercise = dataSource.getAllExcercises(user_id);
-        dataSource.close();
-
-        return exercise;
-    }
-
+    //<editor-fold desc="Step Counter Sensor Listeners">
     @Override
     public void onSensorChanged(SensorEvent event) {
         if(!isPaused) {
@@ -256,13 +253,9 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
+    //</editor-fold>
 
-
-    //Fragment UI listeners below
-
-
-
-    //<editor-fold desc="Implementing Interfaces">
+    //<editor-fold desc="Implementing Fragment Listeners">
     public void onFragmentInteractionSavings(Uri uri)
     {
 
@@ -280,7 +273,55 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
     }
     //</editor-fold>
 
-    //PRIVATE
+    //<editor-fold desc="Options Menu Listeners">
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        /*if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }*/
+        if (id == R.id.edit_profile) {
+            Intent intent = new Intent(this, EditProfileActivity.class);
+            intent.putStringArrayListExtra("USER",currentUser.toArrayList());
+            startActivity(intent);
+            return true;
+        }
+        else if (id == R.id.sign_out) {
+            Intent intent = new Intent(this, SelectUserActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    //</editor-fold>
+
+    public List<ExerciseDataSource.Exercise> grabUserExercises(int user_id)throws SQLException{
+        List<ExerciseDataSource.Exercise> exercise;
+
+        ExerciseDataSource dataSource = new ExerciseDataSource(this);
+        dataSource.open();
+        exercise = dataSource.getAllExcercises(user_id);
+        dataSource.close();
+
+        return exercise;
+    }
+
+    //<editor-fold desc="Private methods">
 
     private int useStep(String exercise){
         if(exercise.equalsIgnoreCase("walking")){
@@ -353,4 +394,10 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
             return false;
         }
     }
+
+    private String determineSpeed(){
+        return null;
+    }
+    //</editor-fold>
+
 }
