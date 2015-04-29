@@ -1,5 +1,6 @@
 package lifesavings.activities;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -172,13 +173,139 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
 
         String dt = date_time.toString();
 
+        boolean success = insertExercise(this,currentUser.getUserid(),dt,-1,"TODO: Implement Accelerometer",stepCount);
+
+        if(success)
+            Toast.makeText(this, "Exercise Recorded", Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(this, "Exercise Not Recorded, Try Again", Toast.LENGTH_LONG).show();
+
+    }
+
+    public void onSubmitEdit(View view) throws SQLException {
+        TimePicker tp = (TimePicker) findViewById(R.id.timePicker);
+        DatePicker dp = (DatePicker) findViewById(R.id.datePicker);
+        EditText sel_duration = (EditText) findViewById(R.id.duration);
+        EditText sel_exertion=(EditText) findViewById(R.id.exertion);
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        double duration;
+        int exertion;
+
+
+        StringBuilder date_time = new StringBuilder();
+
+
+        date_time.append(dp.getMonth() + "/");
+        date_time.append(dp.getDayOfMonth() + "/");
+        date_time.append(dp.getYear() + " ");
+        date_time.append(tp.getCurrentHour() + ":");
+        date_time.append(tp.getCurrentMinute());
+
+        String dt = date_time.toString();
+        String exercise = spinner.getSelectedItem().toString();
+
+        duration = Double.parseDouble(sel_duration.getText().toString());
+        exertion = Integer.parseInt(sel_exertion.getText().toString());
+
+        boolean success = insertExercise(this,currentUser.getUserid(),dt,duration,exercise,exertion);
+
+        if(success)
+            Toast.makeText(this, "Exercise Recorded", Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(this, "Exercise Not Recorded, Try Again", Toast.LENGTH_LONG).show();
+    }
+
+    public void onSetTime(View view){
+        TimePicker tp = (TimePicker) findViewById(R.id.timePicker);
+        if(tp.getVisibility() == View.VISIBLE)
+            tp.setVisibility(View.GONE);
+        else
+            tp.setVisibility(View.VISIBLE);
+
+    }
+
+    public void onSetDate(View view){
+        DatePicker dp = (DatePicker) findViewById(R.id.datePicker);
+        if(dp.getVisibility() == View.VISIBLE)
+            dp.setVisibility(View.GONE);
+        else
+            dp.setVisibility(View.VISIBLE);
+    }
+
+
+    public List<ExerciseDataSource.Exercise> grabUserExercises(int user_id)throws SQLException{
+        List<ExerciseDataSource.Exercise> exercise;
+
         ExerciseDataSource dataSource = new ExerciseDataSource(this);
         dataSource.open();
-        dataSource.createExcercise(currentUser.getUserid(),dt,-1,"TODO: Implement Accelerometer",stepCount);
+        exercise = dataSource.getAllExcercises(user_id);
         dataSource.close();
 
-        Toast.makeText(this, "Exercise Recorded", Toast.LENGTH_LONG).show();
+        return exercise;
+    }
 
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if(!isPaused) {
+            TextView stepView = (TextView) findViewById(R.id.step_count);
+            stepView.setText(Integer.toString(++stepCount));
+        }
+    }
+
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
+
+
+    //Fragment UI listeners below
+
+
+
+    //<editor-fold desc="Implementing Interfaces">
+    public void onFragmentInteractionSavings(Uri uri)
+    {
+
+    }
+    public void onFragmentInteractionEdit(Uri uri)
+    {
+
+    }
+    public void onFragmentInteractionRecord(Uri uri)
+    {
+
+    }
+    public void onFragmentInteractionUser(String str){
+
+    }
+    //</editor-fold>
+
+    //PRIVATE
+
+    private int useStep(String exercise){
+        if(exercise.equalsIgnoreCase("walking")){
+            return 1;
+        }
+        else if(exercise.equalsIgnoreCase("running")){
+            return 1;
+        }
+        else if(exercise.equalsIgnoreCase("jogging")){
+            return 1;
+        }
+        else if(exercise.equalsIgnoreCase("rowing")){
+            return 0;
+        }
+        else if(exercise.equalsIgnoreCase("swimming")){
+            return 0;
+        }
+        else if(exercise.equalsIgnoreCase("hiking")){
+            return 0;
+        }
+        else if(exercise.equalsIgnoreCase("biking")){
+            return 0;
+        }
+
+        return 0;
     }
 
 
@@ -211,129 +338,19 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
                 break;
         }
     }
-    //Fragment UI listeners below
 
-    public void onSetTime(View view){
-        TimePicker tp = (TimePicker) findViewById(R.id.timePicker);
-        if(tp.getVisibility() == View.VISIBLE)
-            tp.setVisibility(View.GONE);
-        else
-            tp.setVisibility(View.VISIBLE);
+    private static boolean insertExercise( Context context, int user_id, String date_time, double duration, String exercise, int step_count) {
+        ExerciseDataSource dataSource = new ExerciseDataSource(context);
 
-    }
-
-    public void onSetDate(View view){
-        DatePicker dp = (DatePicker) findViewById(R.id.datePicker);
-        if(dp.getVisibility() == View.VISIBLE)
-            dp.setVisibility(View.GONE);
-        else
-            dp.setVisibility(View.VISIBLE);
-    }
-
-    public void onSubmitEdit(View view) throws SQLException {
-        TimePicker tp = (TimePicker) findViewById(R.id.timePicker);
-        DatePicker dp = (DatePicker) findViewById(R.id.datePicker);
-        EditText sel_duration = (EditText) findViewById(R.id.duration);
-        EditText sel_exertion=(EditText) findViewById(R.id.exertion);
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        double duration;
-        int exertion;
-
-
-        StringBuilder date_time = new StringBuilder();
-
-
-        date_time.append(dp.getMonth() + "/");
-        date_time.append(dp.getDayOfMonth() + "/");
-        date_time.append(dp.getYear() + " ");
-        date_time.append(tp.getCurrentHour() + ":");
-        date_time.append(tp.getCurrentMinute());
-
-        String dt = date_time.toString();
-        String exercise = spinner.getSelectedItem().toString();
-
-        duration = Double.parseDouble(sel_duration.getText().toString());
-        exertion = Integer.parseInt(sel_exertion.getText().toString());
-
-        ExerciseDataSource dataSource = new ExerciseDataSource(this);
-        dataSource.open();
-        dataSource.createExcercise(currentUser.getUserid(),dt,duration,exercise,exertion);
-        dataSource.close();
-
-
-        Toast.makeText(this, "Exercise Saved", Toast.LENGTH_LONG).show();
-    }
-
-    public List<ExerciseDataSource.Exercise> grabUserExercises(int user_id)throws SQLException{
-        List<ExerciseDataSource.Exercise> exercise;
-
-        ExerciseDataSource dataSource = new ExerciseDataSource(this);
-        dataSource.open();
-        exercise = dataSource.getAllExcercises(user_id);
-        dataSource.close();
-
-        return exercise;
-    }
-
-    //<editor-fold desc="Implementing Interfaces">
-    public void onFragmentInteractionSavings(Uri uri)
-    {
-
-    }
-    public void onFragmentInteractionEdit(Uri uri)
-    {
-
-    }
-    public void onFragmentInteractionRecord(Uri uri)
-    {
-
-    }
-    public void onFragmentInteractionUser(String str){
-
-    }
-    //</editor-fold>
-
-    //Exercise Handler
-    //Returns
-    private int useStep(String exercise){
-        if(exercise.equalsIgnoreCase("walking")){
-            return 1;
+        try{
+            dataSource.open();
+            dataSource.createExcercise(user_id,date_time,duration,exercise,step_count);
+            dataSource.close();
+            return true;
         }
-        else if(exercise.equalsIgnoreCase("running")){
-            return 1;
-        }
-        else if(exercise.equalsIgnoreCase("jogging")){
-            return 1;
-        }
-        else if(exercise.equalsIgnoreCase("rowing")){
-            return 0;
-        }
-        else if(exercise.equalsIgnoreCase("swimming")){
-            return 0;
-        }
-        else if(exercise.equalsIgnoreCase("hiking")){
-            return 0;
-        }
-        else if(exercise.equalsIgnoreCase("biking")){
-            return 0;
-        }
-
-        return 0;
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        if(!isPaused) {
-            TextView stepView = (TextView) findViewById(R.id.step_count);
-            stepView.setText(Integer.toString(++stepCount));
+        catch (SQLException e)
+        {
+            return false;
         }
     }
-
-
-        @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-    }
-
-
-
 }
