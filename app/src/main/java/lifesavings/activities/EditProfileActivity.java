@@ -55,6 +55,7 @@ public class EditProfileActivity extends ActionBarActivity {
         userFemale = (RadioButton) findViewById(R.id.female_gender_radbutton);
         userHeight = (EditText) findViewById(R.id.height_edit_text);
         userWeight = (EditText) findViewById(R.id.weight_edit_text);
+        profileThumbNail = (ImageView) findViewById(R.id.prof_pic);
 
         if(getIntent().hasExtra("USER")) {
             primary =  User.fromArrayList(getIntent().getStringArrayListExtra("USER"));
@@ -70,7 +71,6 @@ public class EditProfileActivity extends ActionBarActivity {
             userWeight.setText("" + primary.getWeight());
             userHeight.setText("" + primary.getHeight());
             photoPath = primary.getIconPath();
-            profileThumbNail = (ImageView) findViewById(R.id.prof_pic);
             profileThumbNail.setImageURI(Uri.parse(photoPath));
         } else {
             userName.setText("");
@@ -151,7 +151,7 @@ public class EditProfileActivity extends ActionBarActivity {
     }
 
     //handle taking a picture
-    private void takePicture() {
+    public void takePicture(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             File profilePic = null;
@@ -171,6 +171,7 @@ public class EditProfileActivity extends ActionBarActivity {
             }
         }
     }
+
     //handle writing a picture
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -199,9 +200,7 @@ public class EditProfileActivity extends ActionBarActivity {
     //Generate thumbnail the way google suggests on their doc pages
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            profileThumbNail.setImageBitmap(imageBitmap);
+            profileThumbNail.setImageURI(Uri.parse(photoPath));
         }
     }
 
