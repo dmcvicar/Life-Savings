@@ -1,21 +1,23 @@
 package lifesavings.activities;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
-import lifesavings.db.UserDataSource;
 import lifesavings.db.User;
+import lifesavings.db.UserDataSource;
 
 
 public class EditProfileActivity extends ActionBarActivity {
 
     public static final String PREFS_NAME = "com.example.cs480.lifesavings";
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
 
     private EditText userName;
     private EditText userAge;
@@ -130,5 +132,13 @@ public class EditProfileActivity extends ActionBarActivity {
                 Integer.parseInt(userHeight.getText().toString()),
                 Integer.parseInt(userAge.getText().toString()));
         return user;
+    }
+
+    //handle taking a picture
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
     }
 }
