@@ -16,8 +16,8 @@ public class User implements Serializable{
     private double bmi;
     private int category;
     private int age;
-    double bfp;
-    String iconPath;
+    private double bfp;
+    private String iconPath;
 
     public User() {
 

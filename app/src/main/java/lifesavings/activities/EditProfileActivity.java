@@ -69,7 +69,10 @@ public class EditProfileActivity extends ActionBarActivity {
             }
             userWeight.setText("" + primary.getWeight());
             userHeight.setText("" + primary.getHeight());
-        }else {
+            photoPath = primary.getIconPath();
+            profileThumbNail = (ImageView) findViewById(R.id.prof_pic);
+            profileThumbNail.setImageURI(Uri.parse(photoPath));
+        } else {
             userName.setText("");
             userAge.setText("");
             userMale.setChecked(false);
@@ -142,7 +145,8 @@ public class EditProfileActivity extends ActionBarActivity {
                 gender,
                 Integer.parseInt(userWeight.getText().toString()),
                 Integer.parseInt(userHeight.getText().toString()),
-                Integer.parseInt(userAge.getText().toString()));
+                Integer.parseInt(userAge.getText().toString()),
+                photoPath);
         return user;
     }
 
