@@ -10,8 +10,7 @@
         android:id="@+id/ex_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ex_time"
-        android:text="Exercise: "/>
+        android:layout_below="@id/ex_time"/>
     <TextView
         android:id="@+id/ex_duration"
         android:layout_width="wrap_content"
@@ -24,6 +23,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/ex_duration"
-        android:text="Exertion Level: "/>
+        android:text="Steps Taken: "/>
 
 </RelativeLayout>

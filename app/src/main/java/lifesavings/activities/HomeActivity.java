@@ -95,7 +95,6 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
     //<editor-fold desc="Location Listeners">
     @Override
     public void onLocationChanged(Location location) {
-        Toast.makeText(this, "LOCATION CHANGED", Toast.LENGTH_SHORT).show();
         if(last != null && !isPaused){
             distance_travelled += location.distanceTo(last);
             TextView stepView = (TextView) findViewById(R.id.distance);
@@ -178,7 +177,7 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
 
         String dt = date_time.toString();
 
-        boolean success = insertExercise(this,currentUser.getUserid(),dt,-1,"TODO: Implement Accelerometer",stepCount);
+        boolean success = insertExercise(this,currentUser.getUserid(),dt,20,"Distance Traveled: " + distance_travelled,stepCount);
 
         if(success)
             Toast.makeText(this, "Exercise Recorded", Toast.LENGTH_LONG).show();
