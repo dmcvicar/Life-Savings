@@ -54,6 +54,7 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
     private int stepCount;
     private Sensor stepCounter;
     private boolean isPaused;
+    private double time;
     //</editor-fold>
 
     @Override
@@ -141,6 +142,7 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,1,this);
 
         Toast.makeText(this, "START!", Toast.LENGTH_LONG).show();
+        time = System.currentTimeMillis();
     }
 
     public void onPauseRecord(View view){
@@ -177,7 +179,7 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
 
         String dt = date_time.toString();
 
-        boolean success = insertExercise(this,currentUser.getUserid(),dt,20,"Distance Traveled: " + distance_travelled, "Step Count: " +  stepCount);
+        boolean success = insertExercise(this,currentUser.getUserid(),dt,(System.currentTimeMillis()-time)/60000,"Distance Traveled: " + distance_travelled, "Step Count: " +  stepCount);
 
         if(success)
             Toast.makeText(this, "Exercise Recorded", Toast.LENGTH_LONG).show();
