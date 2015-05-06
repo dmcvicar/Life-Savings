@@ -30,7 +30,7 @@ public class ExerciseSQLHelper extends SQLiteOpenHelper {
                     + COLUMN_TIME + " TEXT NOT NULL,"
                     + COLUMN_DURATION + " INTEGER NOT NULL, "
                     + COLUMN_EXCERCISE + " TEXT NOT NULL,"
-                    + COLUMN_EXERTION + " INTEGER NOT NULL);";
+                    + COLUMN_EXERTION + " TEXT NOT NULL);";
 
     public ExerciseSQLHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

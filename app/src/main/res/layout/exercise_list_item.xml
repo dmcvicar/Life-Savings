@@ -22,7 +22,6 @@
         android:id="@+id/ex_exertion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ex_duration"
-        android:text="Steps Taken: "/>
+        android:layout_below="@id/ex_duration"/>
 
 </RelativeLayout>

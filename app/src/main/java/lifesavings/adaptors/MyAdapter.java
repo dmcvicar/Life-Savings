@@ -43,7 +43,7 @@ public class MyAdapter extends ArrayAdapter<ExerciseDataSource.Exercise> {
         timeView.setText(exerciseList.get(position).getTime());
         typeView.append(exerciseList.get(position).getExcercise());
         durView.append(Double.toString(exerciseList.get(position).getDuration()));
-        exertView.append(Integer.toString(exerciseList.get(position).getExertion()));
+        exertView.append(exerciseList.get(position).getExertion());
 
         return exerciseView;
     }

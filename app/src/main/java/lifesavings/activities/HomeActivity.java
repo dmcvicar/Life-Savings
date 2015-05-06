@@ -177,7 +177,7 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
 
         String dt = date_time.toString();
 
-        boolean success = insertExercise(this,currentUser.getUserid(),dt,20,"Distance Traveled: " + distance_travelled,stepCount);
+        boolean success = insertExercise(this,currentUser.getUserid(),dt,20,"Distance Traveled: " + distance_travelled, "Step Count: " +  stepCount);
 
         if(success)
             Toast.makeText(this, "Exercise Recorded", Toast.LENGTH_LONG).show();
@@ -213,7 +213,7 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
         duration = Double.parseDouble(sel_duration.getText().toString());
         exertion = Integer.parseInt(sel_exertion.getText().toString());
 
-        boolean success = insertExercise(this,currentUser.getUserid(),dt,duration,exercise,exertion);
+        boolean success = insertExercise(this,currentUser.getUserid(),dt,duration,exercise,"Exertion: " + exertion);
 
         if(success)
             Toast.makeText(this, "Exercise Recorded", Toast.LENGTH_LONG).show();
@@ -379,12 +379,12 @@ public class HomeActivity extends ActionBarActivity implements ProfileSavingsFra
         }
     }
 
-    private static boolean insertExercise( Context context, int user_id, String date_time, double duration, String exercise, int step_count) {
+    private static boolean insertExercise( Context context, int user_id, String date_time, double duration, String exercise, String etc) {
         ExerciseDataSource dataSource = new ExerciseDataSource(context);
 
         try{
             dataSource.open();
-            dataSource.createExcercise(user_id,date_time,duration,exercise,step_count);
+            dataSource.createExcercise(user_id,date_time,duration,exercise,etc);
             dataSource.close();
             return true;
         }

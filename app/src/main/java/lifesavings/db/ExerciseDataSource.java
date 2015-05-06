@@ -30,7 +30,7 @@ public class ExerciseDataSource {
         helper.close();
     }
 
-    public Exercise createExcercise(int userid, String time, double duration, String excercise, int exertion) {
+    public Exercise createExcercise(int userid, String time, double duration, String excercise, String exertion) {
         ContentValues values = new ContentValues();
         values.put(ExerciseSQLHelper.COLUMN_USERID, userid);
         values.put(ExerciseSQLHelper.COLUMN_TIME,time);
@@ -93,7 +93,7 @@ public class ExerciseDataSource {
         Exercise.setTime(cursor.getString(2));
         Exercise.setDuration(cursor.getDouble(3));
         Exercise.setExcercise(cursor.getString(4));
-        Exercise.setExertion(cursor.getInt(5));
+        Exercise.setExertion(cursor.getString(5));
         return Exercise;
     }
 
@@ -104,13 +104,13 @@ public class ExerciseDataSource {
         private String time;
         private double duration;
         private String exercise;
-        private int exertion;
+        private String exertion;
 
         public Exercise() {
 
         }
 
-        public Exercise(int rowid, int userid, String time, double duration, String excercise, int exertion) {
+        public Exercise(int rowid, int userid, String time, double duration, String excercise, String exertion) {
             this.id = rowid;
             this.userid = userid;
             this.time = time;
@@ -121,9 +121,9 @@ public class ExerciseDataSource {
 
 
 
-        public int getExertion() {return this.exertion;}
+        public String getExertion() {return this.exertion;}
 
-        public void setExertion(int exertion){this.exertion = exertion;}
+        public void setExertion(String exertion){this.exertion = exertion;}
 
         public String getExcercise() {
             return exercise;
